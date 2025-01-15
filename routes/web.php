@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\User;
+use App\Http\Controllers\Kategori;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,6 +37,18 @@ Route::middleware('auth')->group(function () {
     Route::post('/user/tambah', [User::class, 'store'])->name('user_tambah');
     Route::post('/user/edit', [User::class, 'edit'])->name('user_edit');
     Route::get('/user/hapus/{id?}', [User::class, 'hapus'])->name('user_hapus');
+
+    Route::get('/kategori', [Kategori::class, 'index'])->name('kategori');
+    Route::post('/kategori/tambah', [Kategori::class, 'store'])->name('kategori_tambah');
+    Route::post('/kategori/edit', [Kategori::class, 'edit'])->name('kategori_edit');
+    Route::get('/kategori/hapus/{id?}', [Kategori::class, 'hapus'])->name('kategori_hapus');
+    
+    Route::get('/konten', function(){
+        return view('konten');
+    })->name('konten');
+    Route::get('/konten/tambah', function(){
+        return view('tambah_konten');
+    })->name('konten_tambah');
 
     Route::post('/user/logout', [User::class, 'logout'])->name('user_logout');
 });
