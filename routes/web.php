@@ -26,6 +26,10 @@ Route::post('/login', [User::class, 'login'])->name('user_login');
 Route::get('/profile', function () {
     return view('profile');
 })->name('profile');
+// berita route
+Route::get('/berita', function () {
+    return view('berita');
+})->name('berita');
 
 Route::middleware('auth')->group(function () {
     Route::get('/user', [User::class, 'index'])->name('user');

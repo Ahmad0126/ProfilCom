@@ -1,154 +1,37 @@
 <x-root :title="'nama_app'">
     <x-front-layout>
-        <div class="row pd-ltr-20 xs-pd-20-10 g-3">
-            <div class="col-lg-8 col-md-7 col-sm-12">
-                <div class="blog-list">
-                    <ul>
-                        <li>
-                            <div class="row no-gutters">
-                                <div class="col-lg-4 col-md-12 col-sm-12">
-                                    <div class="blog-img">
-                                        <img src="{{ asset('vendors/images/img2.jpg') }}" alt="" class="bg_img">
-                                    </div>
-                                </div>
-                                <div class="col-lg-8 col-md-12 col-sm-12">
-                                    <div class="blog-caption">
-                                        <h4><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit</a></h4>
-                                        <div class="blog-by">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</p>
-                                            <div class="pt-10">
-                                                <a href="#" class="btn btn-outline-primary">Read More</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="row no-gutters">
-                                <div class="col-lg-4 col-md-12 col-sm-12">
-                                    <div class="blog-img">
-                                        <img src="{{ asset('vendors/images/img3.jpg') }}" alt="" class="bg_img">
-                                    </div>
-                                </div>
-                                <div class="col-lg-8 col-md-12 col-sm-12">
-                                    <div class="blog-caption">
-                                        <h4><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit</a></h4>
-                                        <div class="blog-by">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</p>
-                                            <div class="pt-10">
-                                                <a href="#" class="btn btn-outline-primary">Read More</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="row no-gutters">
-                                <div class="col-lg-4 col-md-12 col-sm-12">
-                                    <div class="blog-img">
-                                        <img src="{{ asset('vendors/images/img4.jpg') }}" alt="" class="bg_img">
-                                    </div>
-                                </div>
-                                <div class="col-lg-8 col-md-12 col-sm-12">
-                                    <div class="blog-caption">
-                                        <h4><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit</a></h4>
-                                        <div class="blog-by">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</p>
-                                            <div class="pt-10">
-                                                <a href="#" class="btn btn-outline-primary">Read More</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="row no-gutters">
-                                <div class="col-lg-4 col-md-12 col-sm-12">
-                                    <div class="blog-img">
-                                        <img src="{{ asset('vendors/images/img5.jpg') }}" alt="" class="bg_img">
-                                    </div>
-                                </div>
-                                <div class="col-lg-8 col-md-12 col-sm-12">
-                                    <div class="blog-caption">
-                                        <h4><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit</a></h4>
-                                        <div class="blog-by">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</p>
-                                            <div class="pt-10">
-                                                <a href="#" class="btn btn-outline-primary">Read More</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
+        <header class="jumbotron p-5 mb-4 bg-light border border-1 border-dark border-top-0 rounded-top-0 rounded-3">
+            <div class="container-fluid py-5">
+                <h1 class="display-5 fw-bold">Custom jumbotron</h1>
+                <p class="col-md-8 fs-4">Using a series of utilities, you can create this jumbotron, just like the one in previous versions of Bootstrap. Check out the examples below for how you can remix and restyle it to your liking.</p>
+                <button class="btn btn-primary btn-lg" type="button">Example button</button>
+            </div>
+        </header>
+
+        <div class="container-fluid" id="content">
+            <section class="section-wrapper">
+                <div class="section-heading">
+                    <h5 class="section-title">About Me</h5>
                 </div>
-                <div class="blog-pagination">
-                    <div class="btn-toolbar justify-content-center mb-15">
-                        <div class="btn-group">
-                            <a href="#" class="btn btn-outline-primary prev"><i class="fa fa-angle-double-left"></i></a>
-                            <a href="#" class="btn btn-outline-primary">1</a>
-                            <a href="#" class="btn btn-outline-primary">2</a>
-                            <span class="btn btn-primary current">3</span>
-                            <a href="#" class="btn btn-outline-primary">4</a>
-                            <a href="#" class="btn btn-outline-primary">5</a>
-                            <a href="#" class="btn btn-outline-primary next"><i class="fa fa-angle-double-right"></i></a>
+                <div class="section-content">
+                    <div class="row pd-ltr-20 xs-pd-20-10 aboutme-section-wrapper border-dark">
+                        <div class="col-sm-4 border-1 p-3 p-md-5">
+                            <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image border border-1 border-dark img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false">
+                                <title>Placeholder</title>
+                                <rect width="100%" height="100%" fill="var(--bs-secondary-bg)"></rect><text x="50%" y="50%" fill="var(--bs-secondary-color)" dy=".3em">500x500</text>
+                            </svg>
+                        </div>
+                        <div class="col-sm-8 border-1 p-3 p-md-5">
+                            <div class="d-flex align-items-center justify-content-start">
+                                <section class="aboutme-section">
+                                    <h1 class="display-3 fw-bold">Designed for engineers</h1>
+                                    <h3 class="fw-normal text-muted mb-3">Build anything you want with Aperture</h3>
+                                </section>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-4 col-md-5 col-sm-12">
-                <section class="card-box mb-30">
-                    <h5 class="pd-20 h5 mb-0">Categories</h5>
-                    <div class="list-group">
-                        <a href="#" class="list-group-item rounded-0 d-flex align-items-center justify-content-between">HTML <span class="badge badge-primary badge-pill">7</span></a>
-                        <a href="#" class="list-group-item rounded-0 d-flex align-items-center justify-content-between">Css <span class="badge badge-primary badge-pill">10</span></a>
-                        <a href="#" class="list-group-item rounded-0 d-flex align-items-center justify-content-between active">Bootstrap <span class="badge badge-primary badge-pill">8</span></a>
-                        <a href="#" class="list-group-item rounded-0 d-flex align-items-center justify-content-between">jQuery <span class="badge badge-primary badge-pill">15</span></a>
-                        <a href="#" class="list-group-item rounded-0 d-flex align-items-center justify-content-between">Design <span class="badge badge-primary badge-pill">5</span></a>
-                    </div>
-                </section>
-                <section class="card-box mb-30">
-                    <h5 class="pd-20 h5 mb-0">Latest Post</h5>
-                    <div class="latest-post">
-                        <ul>
-                            <li>
-                                <h4><a href="#">Ut enim ad minim veniam, quis nostrud exercitation ullamco</a></h4>
-                                <span>HTML</span>
-                            </li>
-                            <li>
-                                <h4><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit</a></h4>
-                                <span>Css</span>
-                            </li>
-                            <li>
-                                <h4><a href="#">Ut enim ad minim veniam, quis nostrud exercitation ullamco</a></h4>
-                                <span>jQuery</span>
-                            </li>
-                            <li>
-                                <h4><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit</a></h4>
-                                <span>Bootstrap</span>
-                            </li>
-                            <li>
-                                <h4><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit</a></h4>
-                                <span>Design</span>
-                            </li>
-                        </ul>
-                    </div>
-                </section>
-                <section class="card-box overflow-hidden">
-                    <h5 class="pd-20 h5 mb-0">Archives</h5>
-                    <div class="list-group">
-                        <a href="#" class="list-group-item rounded-0 d-flex align-items-center justify-content-between">January 2020</a>
-                        <a href="#" class="list-group-item rounded-0 d-flex align-items-center justify-content-between">February 2020</a>
-                        <a href="#" class="list-group-item rounded-0 d-flex align-items-center justify-content-between">March 2020</a>
-                        <a href="#" class="list-group-item rounded-0 d-flex align-items-center justify-content-between">April 2020</a>
-                        <a href="#" class="list-group-item rounded-0 d-flex align-items-center justify-content-between">May 2020</a>
-                    </div>
-                </section>
-            </div>
+            </section>
         </div>
     </x-front-layout>
 </x-root>
