@@ -1,5 +1,5 @@
 <x-root :title="'nama_app'">
-    <div class="login-header box-shadow mb-4">
+    <div class="header box-shadow w-100">
 		<div class="container-fluid d-flex justify-content-between align-items-center">
 			<div class="brand-logo">
 				<a href="login.html">
@@ -14,9 +14,19 @@
 			</div>
 		</div>
 	</div>
-    <div class="container pt-2">
-        <div class="row">
-            <div class="col-md-8 col-sm-12">
+    <style>
+        #content{
+            padding-top: 80px;
+        }
+        @media (max-width: 1024px){
+            #content{
+                padding-top: 10px;
+            }
+        }
+    </style>
+    <div class="container" id="content">
+        <div class="row pd-ltr-20 xs-pd-20-10">
+            <div class="col-lg-8 col-md-7 col-sm-12">
                 <div class="blog-list">
                     <ul>
                         <li>
@@ -115,7 +125,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-12">
+            <div class="col-lg-4 col-md-5 col-sm-12">
                 <div class="card-box mb-30">
                     <h5 class="pd-20 h5 mb-0">Categories</h5>
                     <div class="list-group">
