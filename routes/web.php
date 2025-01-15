@@ -22,7 +22,12 @@ Route::get('/login', function () {
 })->name('login');
 Route::post('/login', [User::class, 'login'])->name('user_login');
 
-Route::middleware('auth')->group(function(){
+// profile route
+Route::get('/profile', function () {
+    return view('profile');
+})->name('profile');
+
+Route::middleware('auth')->group(function () {
     Route::get('/user', [User::class, 'index'])->name('user');
     Route::post('/user/tambah', [User::class, 'store'])->name('user_tambah');
     Route::post('/user/edit', [User::class, 'edit'])->name('user_edit');

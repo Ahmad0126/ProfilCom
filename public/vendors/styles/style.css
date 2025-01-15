@@ -577,9 +577,10 @@ p {
     border: 0;
     padding: 0;
     overflow: hidden;
-    border-radius: 10px;
-    -webkit-box-shadow: 0 0 28px rgba(0, 0, 0, 0.1);
-    box-shadow: 0 0 28px rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    -webkit-box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
 }
 .dropdown-item {
     font-size: 16px;
@@ -2671,6 +2672,9 @@ body.IE .register-page-wrap .container {
     font-size: 14px;
     color: #78909c;
     border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+.latest-post ul li:last-child {
+    border-bottom: none;
 }
 .latest-post ul li h4 {
     font-size: 14px;

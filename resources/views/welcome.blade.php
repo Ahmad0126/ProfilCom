@@ -1,31 +1,6 @@
 <x-root :title="'nama_app'">
-    <div class="header box-shadow w-100">
-		<div class="container-fluid d-flex justify-content-between align-items-center">
-			<div class="brand-logo">
-				<a href="login.html">
-					<img src="{{ asset('vendors/images/deskapp-logo.svg') }}" alt="">
-				</a>
-			</div>
-			<div class="navbar-nav d-flex flex-row" style="column-gap: 1.5rem;">
-                <a class="nav-link" href="register.html">Link 1</a>
-                <a class="nav-link" href="register.html">Link 2</a>
-                <a class="nav-link" href="register.html">Link 3</a>
-                <a class="nav-link" href="register.html">Link 4</a>
-			</div>
-		</div>
-	</div>
-    <style>
-        #content{
-            padding-top: 80px;
-        }
-        @media (max-width: 1024px){
-            #content{
-                padding-top: 10px;
-            }
-        }
-    </style>
-    <div class="container" id="content">
-        <div class="row pd-ltr-20 xs-pd-20-10">
+    <x-front-layout>
+        <div class="row pd-ltr-20 xs-pd-20-10 g-3">
             <div class="col-lg-8 col-md-7 col-sm-12">
                 <div class="blog-list">
                     <ul>
@@ -129,11 +104,11 @@
                 <section class="card-box mb-30">
                     <h5 class="pd-20 h5 mb-0">Categories</h5>
                     <div class="list-group">
-                        <a href="#" class="list-group-item d-flex align-items-center justify-content-between">HTML <span class="badge badge-primary badge-pill">7</span></a>
-                        <a href="#" class="list-group-item d-flex align-items-center justify-content-between">Css <span class="badge badge-primary badge-pill">10</span></a>
-                        <a href="#" class="list-group-item d-flex align-items-center justify-content-between active">Bootstrap <span class="badge badge-primary badge-pill">8</span></a>
-                        <a href="#" class="list-group-item d-flex align-items-center justify-content-between">jQuery <span class="badge badge-primary badge-pill">15</span></a>
-                        <a href="#" class="list-group-item d-flex align-items-center justify-content-between">Design <span class="badge badge-primary badge-pill">5</span></a>
+                        <a href="#" class="list-group-item rounded-0 d-flex align-items-center justify-content-between">HTML <span class="badge badge-primary badge-pill">7</span></a>
+                        <a href="#" class="list-group-item rounded-0 d-flex align-items-center justify-content-between">Css <span class="badge badge-primary badge-pill">10</span></a>
+                        <a href="#" class="list-group-item rounded-0 d-flex align-items-center justify-content-between active">Bootstrap <span class="badge badge-primary badge-pill">8</span></a>
+                        <a href="#" class="list-group-item rounded-0 d-flex align-items-center justify-content-between">jQuery <span class="badge badge-primary badge-pill">15</span></a>
+                        <a href="#" class="list-group-item rounded-0 d-flex align-items-center justify-content-between">Design <span class="badge badge-primary badge-pill">5</span></a>
                     </div>
                 </section>
                 <section class="card-box mb-30">
@@ -166,64 +141,14 @@
                 <section class="card-box overflow-hidden">
                     <h5 class="pd-20 h5 mb-0">Archives</h5>
                     <div class="list-group">
-                        <a href="#" class="list-group-item d-flex align-items-center justify-content-between">January 2020</a>
-                        <a href="#" class="list-group-item d-flex align-items-center justify-content-between">February 2020</a>
-                        <a href="#" class="list-group-item d-flex align-items-center justify-content-between">March 2020</a>
-                        <a href="#" class="list-group-item d-flex align-items-center justify-content-between">April 2020</a>
-                        <a href="#" class="list-group-item d-flex align-items-center justify-content-between">May 2020</a>
+                        <a href="#" class="list-group-item rounded-0 d-flex align-items-center justify-content-between">January 2020</a>
+                        <a href="#" class="list-group-item rounded-0 d-flex align-items-center justify-content-between">February 2020</a>
+                        <a href="#" class="list-group-item rounded-0 d-flex align-items-center justify-content-between">March 2020</a>
+                        <a href="#" class="list-group-item rounded-0 d-flex align-items-center justify-content-between">April 2020</a>
+                        <a href="#" class="list-group-item rounded-0 d-flex align-items-center justify-content-between">May 2020</a>
                     </div>
                 </section>
             </div>
         </div>
-    </div>
-    
-    <footer class="footer py-5 my-5 border-2 border-top bg-light shadow">
-        <div class="container">
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5">
-                <div class="col mb-3">
-                    <a href="/" class="d-flex align-items-center mb-3 link-body-emphasis text-decoration-none">
-                        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-                    </a>
-                    <p class="text-body-secondary">© 2024</p>
-                </div>
-            
-                <div class="col mb-3">
-                    <!-- nothing here. -->
-                </div>
-            
-                <div class="col mb-3">
-                    <h5>Section</h5>
-                    <ul class="nav flex-column">
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Home</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Features</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Pricing</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">FAQs</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">About</a></li>
-                    </ul>
-                </div>
-            
-                <div class="col mb-3">
-                    <h5>Section</h5>
-                    <ul class="nav flex-column">
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Home</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Features</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Pricing</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">FAQs</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">About</a></li>
-                    </ul>
-                </div>
-            
-                <div class="col mb-3">
-                    <h5>Section</h5>
-                    <ul class="nav flex-column">
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Home</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Features</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Pricing</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">FAQs</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">About</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </footer>
+    </x-front-layout>
 </x-root>
