@@ -37,7 +37,7 @@
         }
         .offcanvas-collapse {
             position: fixed;
-            top: 56px; /* Height of navbar */
+            top: 89.67px;
             bottom: 0;
             left: 100%;
             width: 100%;
@@ -51,10 +51,7 @@
         }
         .offcanvas-collapse.open {
             visibility: visible;
-            transform: translateX(-102%);
-
-            /* Ajust the margin top to match the height of the navbar */
-            margin-top: calc(89.67px - 56px);
+            transform: translateX(-101%);
         }
 
         .blog-img {
@@ -153,8 +150,20 @@
         margin-top: 87px;
     }
 
-    .aboutme-section-wrapper {
-        border: 1px solid var(--bs-border-color);
+    .section-wrapper .section-heading .section-title {
+        border-radius: 3px 3px 0 0;
+        padding: 8px;
+        background-color: #ffe9bfa6;
+        width: fit-content;
+        color: transparent;
+        font-size: 4em;
+        text-emphasis: stroke;
+        -webkit-text-stroke: 1px #292827a6; 
+        text-transform: uppercase;
+    }
+
+    .section-wrapper:not(:last-child) {
+        margin-bottom: 3rem;
     }
 </style>
 <!-- style custom -->
