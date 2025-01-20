@@ -8,29 +8,31 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-12 text-right">
-                    <button class="btn btn-primary" role="button">
+                    <a class="btn btn-primary" href="{{ route('konten_tambah') }}">
                         Tambah
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>
         <div class="blog-list">
             <ul class="row">
                 <li class="col-lg-6">
-                    <div class="blog-caption">
-                        <h4><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit <i class="icon-copy fa fa-external-link" aria-hidden="true"></i></a></h4>
-                        <div class="blog-by">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore</p>
-                            <div class="d-flex justify-content-between">
-                                <p class="fw-bold text-secondary"><i class="icon-copy fa fa-list" aria-hidden="true"></i> Kategori</p>
-                                <p class="fw-bold text-secondary"><i class="icon-copy fa fa-calendar" aria-hidden="true"></i> Tanggal</p>
-                            </div>
-                            <div class="pt-10">
-                                <a href="#" class="btn btn-outline-primary">Edit</a>
-                                <a href="#" class="btn btn-outline-danger">Hapus</a>
+                    @foreach ($berita as $b)
+                        <div class="blog-caption">
+                            <h4><a href="#">{{ $b->judul }} <i class="icon-copy fa fa-external-link" aria-hidden="true"></i></a></h4>
+                            <div class="blog-by">
+                                <p>{{ substr(strip_tags($b->keterangan), 0, 160) }}...</p>
+                                <div class="d-flex justify-content-between">
+                                    <p class="fw-bold text-secondary"><i class="icon-copy fa fa-list" aria-hidden="true"></i> {{ $b->kategori }}</p>
+                                    <p class="fw-bold text-secondary"><i class="icon-copy fa fa-calendar" aria-hidden="true"></i> {{ $b->tanggal }}</p>
+                                </div>
+                                <div class="pt-10">
+                                    <a href="#" class="btn btn-outline-primary">Edit</a>
+                                    <a href="#" class="btn btn-outline-danger">Hapus</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endforeach
                 </li>
             </ul>
         </div>
