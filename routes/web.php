@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Home;
 use App\Http\Controllers\User;
 use App\Http\Controllers\Kategori;
 use App\Http\Controllers\Konten;
@@ -16,22 +17,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [Home::class, 'index'])->name('base');
 Route::get('/login', function () {
     return view('login');
 })->name('login');
 Route::post('/login', [User::class, 'login'])->name('user_login');
 
 // profile route
-Route::get('/profile', function () {
-    return view('profile');
-})->name('profile');
+Route::get('/profile', [Home::class, 'profile'])->name('profile');
 // berita route
-Route::get('/berita', function () {
-    return view('berita');
-})->name('berita');
+Route::get('/berita', [Home::class, 'berita'])->name('berita');
+Route::get('/berita/kategori/{nama?}', [Home::class, 'kategori'])->name('berita_kategori');
+Route::get('/berita/{slug?}', [Home::class, 'detail'])->name('berita_detail');
 
 Route::middleware('auth')->group(function () {
     Route::get('/user', [User::class, 'index'])->name('user');
@@ -45,8 +42,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/kategori/hapus/{id?}', [Kategori::class, 'hapus'])->name('kategori_hapus');
     
     Route::get('/konten', [Konten::class, 'index'])->name('konten');
-    Route::post('/konten/store', [Konten::class, 'store'])->name('konten_store');
     Route::get('/konten/tambah', [Konten::class, 'tambah'])->name('konten_tambah');
+    Route::get('/konten/edit/{id?}', [Konten::class, 'edit'])->name('konten_edit');
+    Route::get('/konten/hapus/{id?}', [Konten::class, 'hapus'])->name('konten_hapus');
+    Route::post('/konten/store', [Konten::class, 'store'])->name('konten_store');
+    Route::post('/konten/change', [Konten::class, 'change'])->name('konten_change');
 
     Route::post('/user/logout', [User::class, 'logout'])->name('user_logout');
 });

@@ -38,7 +38,7 @@
 
 <div class="left-side-bar">
     <div class="brand-logo">
-        <a href="index.html">
+        <a href="{{ route('base') }}">
             <img src="{{ asset('vendors/images/deskapp-logo.svg') }}" alt="" class="dark-logo">
             <img src="{{ asset('vendors/images/deskapp-logo-white.svg') }}" alt="" class="light-logo">
         </a>
@@ -62,6 +62,11 @@
                 <li>
                     <a href="{{ route('kategori') }}" class="dropdown-toggle no-arrow">
                         <span class="micon dw dw-list3"></span><span class="mtext">Kategori</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('konten') }}" class="dropdown-toggle no-arrow">
+                        <span class="micon dw dw-newspaper-1"></span><span class="mtext">Berita</span>
                     </a>
                 </li>
             </ul>

@@ -1,5 +1,5 @@
-<x-root :title="'nama_app'">
-    <x-front-layout>
+<x-root :title="$title">
+    <x-front-layout :kategori="$kategori">
         <header class="jumbotron p-5 mb-4 bg-light border border-1 border-dark border-top-0 rounded-top-0 rounded-3">
             <div class="container-fluid py-5">
                 <h1 class="display-5 fw-bold">Custom jumbotron</h1>

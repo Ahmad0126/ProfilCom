@@ -169,9 +169,9 @@
 <!-- style custom -->
 
 <header class="header container-fluid">
-    <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light border-2 border-bottom border-dark p-2" aria-label="Main navigation">
+    <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light border-2 border-bottom  p-2" aria-label="Main navigation">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="{{ route('base') }}">
                 <img class="p-1" src="{{ asset('vendors/images/deskapp-logo.svg') }}" alt="">
             </a>
             <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation">
@@ -184,14 +184,15 @@
                         <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route("profile") }}">Profile</a>
+                        <a class="nav-link" href="{{ route("profile") }}">Profil</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Settings</a>
-                        <ul class="dropdown-menu border-dark">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Berita</a>
+                        <ul class="dropdown-menu ">
+                            <li><a class="dropdown-item" href="{{ route('berita') }}">Semua</a></li>
+                            @foreach ($kategori as $k)
+                                <li><a class="dropdown-item" href="{{ route('berita_kategori', $k->nama) }}">{{ $k->nama }}</a></li>
+                            @endforeach
                         </ul>
                     </li>
                 </ul>
@@ -206,7 +207,7 @@
 
 {{ $slot }}
 
-<footer class="footer py-5 mt-5 border-2 border-top border-dark bg-light shadow">
+<footer class="footer py-5 mt-5 border-2 border-top  bg-light shadow">
     <div class="container-fluid px-lg-5">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5">
             <section class="col mb-3">

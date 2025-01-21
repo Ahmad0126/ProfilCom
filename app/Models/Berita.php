@@ -16,6 +16,32 @@ class Berita extends Model
             ->selectRaw("b.id, b.judul, b.keterangan, b.slug, b.gambar, b.tanggal, k.nama as kategori, u.nama as user")
             ->join(DB::raw('kategori k'), 'b.id_kategori', '=', 'k.id')
             ->join(DB::raw('users u'), 'b.id_user', '=', 'u.id')
-            ->get();
+            ->orderByDesc('tanggal')
+            ->paginate(8);
+    }
+    public static function get_all_konten_by_kategori($kategori){
+        return DB::table('berita', 'b')
+            ->selectRaw("b.id, b.judul, b.keterangan, b.slug, b.gambar, b.tanggal, k.nama as kategori, u.nama as user")
+            ->join(DB::raw('kategori k'), 'b.id_kategori', '=', 'k.id')
+            ->join(DB::raw('users u'), 'b.id_user', '=', 'u.id')
+            ->where('k.nama', $kategori)
+            ->orderByDesc('tanggal')
+            ->paginate(8);
+    }
+    public static function get_latest_konten(){
+        return DB::table('berita', 'b')
+            ->selectRaw("b.judul, b.slug, k.nama as kategori")
+            ->join(DB::raw('kategori k'), 'b.id_kategori', '=', 'k.id')
+            ->join(DB::raw('users u'), 'b.id_user', '=', 'u.id')
+            ->orderByDesc('tanggal')
+            ->limit(5)->get();
+    }
+    public static function get_berita_by_slug($slug){
+        return DB::table('berita', 'b')
+            ->selectRaw("b.judul, b.keterangan, b.gambar, b.slug, b.tanggal, k.nama as kategori, u.nama as user")
+            ->join(DB::raw('kategori k'), 'b.id_kategori', '=', 'k.id')
+            ->join(DB::raw('users u'), 'b.id_user', '=', 'u.id')
+            ->where('b.slug', $slug)
+            ->first();
     }
 }
