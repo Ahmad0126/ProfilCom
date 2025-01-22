@@ -1,5 +1,5 @@
 <x-root  :title="$title">
-    <x-layout>
+    <x-layout :search="$search ?? null">
         <div class="page-header">
             <div class="row align-items-center ">
                 <div class="col-md-6 col-sm-12">
@@ -28,7 +28,7 @@
                                 </div>
                                 <div class="pt-10">
                                     <a href="{{ route('konten_edit', $b->id) }}" class="btn btn-outline-primary">Edit</a>
-                                    <a href="{{ route('konten_hapus', $b->id) }}" class="btn btn-outline-danger" onclick="return confirm('Yakin ingin menghapus user ini?')">Hapus</a>
+                                    <a href="{{ route('konten_hapus', $b->id) }}" class="btn btn-outline-danger" onclick="return confirm('Yakin ingin menghapus berita ini?')">Hapus</a>
                                 </div>
                             </div>
                         </div>

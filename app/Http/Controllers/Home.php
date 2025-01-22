@@ -13,13 +13,21 @@ class Home extends Controller
         $data['kategori'] = Kategori::all();
         return view('welcome', $data);
     }
-    public function berita(){
+    public function berita(Request $req){
         $data['title'] = 'Berita | nama_app';
         $data['kategori'] = Kategori::all();
         $data['kategori_sidebar'] = Kategori::get_kategori_and_jumlah_kontennya(5);
-        $data['berita'] = Berita::get_all_konten();
+
+        $search = $req->query('search');
+        if($search){
+            $data['berita'] = Berita::search_konten($search)->appends('search', $search);
+        }else{
+            $data['berita'] = Berita::get_all_konten();
+        }
+
         $data['latest_berita'] = Berita::get_latest_konten();
         $data['kategori_active'] = null;
+        $data['search'] = $search;
         return view('berita', $data);
     }
     public function kategori($nama = null){

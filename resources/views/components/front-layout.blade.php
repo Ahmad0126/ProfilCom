@@ -196,8 +196,8 @@
                         </ul>
                     </li>
                 </ul>
-                <form class="d-flex gap-1 form-horizontal" role="search">
-                    <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+                <form class="d-flex gap-1 form-horizontal" action="{{ route('berita') }}" method="get" role="search">
+                    <input class="form-control" type="search" name="search" placeholder="Search" aria-label="Search" value="{{ $search }}">
                     <button class="btn btn-outline-primary" type="submit">Search</button>
                 </form>
             </div>

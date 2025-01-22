@@ -12,7 +12,8 @@ class FrontLayout extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public $kategori = []
+        public $kategori = [],
+        public $search = null
     ){}
 
     /**

@@ -10,9 +10,16 @@ use Illuminate\Support\Str;
 
 class Konten extends Controller
 {
-    public function index(){
+    public function index(Request $req){
         $data['title'] = 'Daftar Berita';
-        $data['berita'] = Berita::get_all_konten();
+
+        $search = $req->query('search');
+        if($search){
+            $data['berita'] = Berita::search_konten($search)->appends('search', $search);
+        }else{
+            $data['berita'] = Berita::get_all_konten();
+        }
+        
         return view('konten', $data);
     }
     public function tambah(){

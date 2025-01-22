@@ -44,4 +44,13 @@ class Berita extends Model
             ->where('b.slug', $slug)
             ->first();
     }
+    public static function search_konten($search){
+        return DB::table('berita', 'b')
+            ->selectRaw("b.id, b.judul, b.keterangan, b.slug, b.gambar, b.tanggal, k.nama as kategori, u.nama as user")
+            ->join(DB::raw('kategori k'), 'b.id_kategori', '=', 'k.id')
+            ->join(DB::raw('users u'), 'b.id_user', '=', 'u.id')
+            ->where('b.judul', 'like', "%".$search."%")
+            ->orderByDesc('tanggal')
+            ->paginate(8);
+    }
 }

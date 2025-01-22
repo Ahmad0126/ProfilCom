@@ -3,10 +3,10 @@
         <div class="menu-icon dw dw-menu"></div>
         <div class="search-toggle-icon dw dw-search2" data-toggle="header_search"></div>
         <div class="header-search">
-            <form>
+            <form action="{{ route('konten') }}" method="GET">
                 <div class="form-group mb-0">
                     <i class="dw dw-search2 search-icon"></i>
-                    <input type="text" class="form-control search-input" placeholder="Search Here">
+                    <input type="text" name="search" class="form-control search-input" placeholder="Search Here">
                 </div>
             </form>
         </div>
