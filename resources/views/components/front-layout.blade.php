@@ -14,7 +14,7 @@
 
     #content{
         flex-grow: 1;
-        padding-top: 90px;
+        padding-top: 30px;
     }
 
     .bg-light {
@@ -42,8 +42,8 @@
             left: 100%;
             width: 100%;
             border-radius: 10px 10px 0 0;
-            padding-right: 1rem;
-            padding-left: 1rem;
+            padding: 1rem;
+            border: var(--bs-border-width) solid var(--bs-border-color);
             overflow-y: auto;
             visibility: hidden;
             background-color: #fff;
@@ -51,7 +51,7 @@
         }
         .offcanvas-collapse.open {
             visibility: visible;
-            transform: translateX(-101%);
+            transform: translateX(-102%);
         }
 
         .blog-img {
@@ -85,7 +85,7 @@
     }
 
     section.card-box .list-group .list-group-item:last-child {
-        border-radius: 0 0 5px 5px !important;
+        border-radius: 0 0 10px 10px !important;
     }
 
     .footer {
@@ -151,19 +151,17 @@
     }
 
     .section-wrapper .section-heading .section-title {
-        border-radius: 3px 3px 0 0;
         padding: 8px;
-        background-color: #ffe9bfa6;
+        background-color: #1b00ff;
         width: fit-content;
-        color: transparent;
-        font-size: 4em;
-        text-emphasis: stroke;
-        -webkit-text-stroke: 1px #292827a6; 
+        color: #fff;
+        font-size: 1.8em; 
         text-transform: uppercase;
+        border: var(--bs-border-width) solid #fff;
     }
 
     .section-wrapper:not(:last-child) {
-        margin-bottom: 3rem;
+        margin-bottom: 40px;
     }
 </style>
 <!-- style custom -->

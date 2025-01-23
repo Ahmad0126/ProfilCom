@@ -1,7 +1,7 @@
 <x-root  :title="$title">
     <x-layout :search="$search ?? null">
         <div class="page-header">
-            <div class="row align-items-center ">
+            <div class="row align-items-center">
                 <div class="col-md-6 col-sm-12">
                     <div class="title">
                         <h4 class="pb-0">Daftar Berita</h4>
@@ -14,10 +14,21 @@
                 </div>
             </div>
         </div>
+        <style>
+            .blog-list {
+                margin-bottom: 40px;
+            }
+            .blog-list .blog-list-wrapper .blog-content {
+                margin-bottom: 0;
+            }
+            .blog-list .blog-list-wrapper .blog-content.col-md-6 {
+                max-width: calc(50% - .75rem);
+            }
+        </style>
         <div class="blog-list">
-            <ul class="row">
+            <div class="blog-list-wrapper row gap-4" style="margin-right: 0 ; margin-left: 0;">
                 @foreach ($berita as $b)
-                    <li class="col-lg-6">
+                    <div class="blog-content col-md-6">
                         <div class="blog-caption">
                             <h4><a href="{{ route('berita_detail', $b->slug) }}" target="_blank">{{ $b->judul }} <i class="icon-copy fa fa-external-link" aria-hidden="true"></i></a></h4>
                             <div class="blog-by">
@@ -32,9 +43,9 @@
                                 </div>
                             </div>
                         </div>
-                    </li>
+                    </div>
                 @endforeach
-            </ul>
+            </div>
         </div>
         <div class="blog-pagination" style="overflow-x: scroll">
             {{ $berita->onEachSide(1)->links('pagination.custom') }}
