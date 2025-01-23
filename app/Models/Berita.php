@@ -30,7 +30,7 @@ class Berita extends Model
     }
     public static function get_latest_konten(){
         return DB::table('berita', 'b')
-            ->selectRaw("b.judul, b.slug, k.nama as kategori")
+            ->selectRaw("b.judul, b.slug, b.gambar, k.nama as kategori")
             ->join(DB::raw('kategori k'), 'b.id_kategori', '=', 'k.id')
             ->join(DB::raw('users u'), 'b.id_user', '=', 'u.id')
             ->orderByDesc('tanggal')

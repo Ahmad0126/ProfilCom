@@ -11,6 +11,7 @@ class Home extends Controller
     public function index(){
         $data['title'] = 'nama_app';
         $data['kategori'] = Kategori::all();
+        $data['berita'] = Berita::get_latest_konten();
         return view('welcome', $data);
     }
     public function berita(Request $req){

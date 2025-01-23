@@ -10,7 +10,7 @@
                                     <div class="row no-gutters">
                                         <div class="col-lg-5 col-md-12 col-sm-12">
                                             <div class="blog-img">
-                                                <img src="{{ asset('storage/'.str_replace('.jpg', '.png', $b->gambar)) }}" alt="" class="bg_img">
+                                                <img src="{{ asset('storage/'.$b->gambar) }}" alt="" class="bg_img">
                                             </div>
                                         </div>
                                         <div class="col-lg-7 col-md-12 col-sm-12">

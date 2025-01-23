@@ -1,6 +1,9 @@
 <x-root :title="$title">
     <x-front-layout :kategori="$kategori">
         <style>
+            #content {
+                padding-top: 30px;
+            }
             .section-content-for-blog .section-image-for-blog img {
                 border: var(--bs-border-width) solid var(--bs-border-color);    
                 border-radius: 8px;
@@ -78,36 +81,20 @@
                 </div>
                 <div class="section-content">
                     <div class="row g-4 pd-ltr-20 xs-pd-20-10 berita-section-wrapper">
-                        <div class="col-md-4">
-                            <div class="blog-content">
-                                <div class="blog-image">
-                                    <img src="{{ asset('storage/'.str_replace('.jpg', '.png', 'upload/konten/default.png')) }}" alt="">
-                                </div>
-                                <div class="blog-caption">
-                                    <h5 class="mb-10">Blog Title</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="blog-content">
-                                <div class="blog-image">
-                                    <img src="{{ asset('storage/'.str_replace('.jpg', '.png', 'upload/konten/default.png')) }}" alt="">
-                                </div>
-                                <div class="blog-caption">
-                                    <h5 class="mb-10">Blog Title</h5>
+                        @foreach ($berita as $b)
+                            <div class="col-md-4">
+                                <div class="blog-content">
+                                    <div class="blog-image">
+                                        <img src="{{ asset('storage/'.$b->gambar) }}" alt="">
+                                    </div>
+                                    <div class="blog-caption">
+                                        <a href="{{ route('berita_detail', $b->slug) }}">
+                                            <h5 class="mb-10">{{ $b->judul }}</h5>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="blog-content">
-                                <div class="blog-image">
-                                    <img src="{{ asset('storage/'.str_replace('.jpg', '.png', 'upload/konten/default.png')) }}" alt="">
-                                </div>
-                                <div class="blog-caption">
-                                    <h5 class="mb-10">Blog Title</h5>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </section>
