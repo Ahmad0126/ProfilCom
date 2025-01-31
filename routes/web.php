@@ -3,6 +3,7 @@
 use App\Http\Controllers\Home;
 use App\Http\Controllers\User;
 use App\Http\Controllers\Kategori;
+use App\Http\Controllers\Konfigurasi;
 use App\Http\Controllers\Konten;
 use Illuminate\Support\Facades\Route;
 
@@ -40,13 +41,16 @@ Route::middleware('auth')->group(function () {
     Route::post('/kategori/tambah', [Kategori::class, 'store'])->name('kategori_tambah');
     Route::post('/kategori/edit', [Kategori::class, 'edit'])->name('kategori_edit');
     Route::get('/kategori/hapus/{id?}', [Kategori::class, 'hapus'])->name('kategori_hapus');
-    
+
     Route::get('/konten', [Konten::class, 'index'])->name('konten');
     Route::get('/konten/tambah', [Konten::class, 'tambah'])->name('konten_tambah');
     Route::get('/konten/edit/{id?}', [Konten::class, 'edit'])->name('konten_edit');
     Route::get('/konten/hapus/{id?}', [Konten::class, 'hapus'])->name('konten_hapus');
     Route::post('/konten/store', [Konten::class, 'store'])->name('konten_store');
     Route::post('/konten/change', [Konten::class, 'change'])->name('konten_change');
+
+    // konfigurasi route
+    Route::get('/konfigurasi', [Konfigurasi::class, 'index'])->name('konfigurasi');
 
     Route::post('/user/logout', [User::class, 'logout'])->name('user_logout');
 });
