@@ -162,7 +162,7 @@
 
     .section-wrapper .section-heading .section-title {
         padding: 8px;
-        background-color: #1b00ff;
+        background: linear-gradient(to right, #0077ff, #0091ff, #0077ff);
         width: fit-content;
         color: #fff;
         font-size: 1.8em; 
