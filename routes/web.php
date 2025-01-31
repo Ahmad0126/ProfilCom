@@ -4,6 +4,7 @@ use App\Http\Controllers\Home;
 use App\Http\Controllers\User;
 use App\Http\Controllers\Kategori;
 use App\Http\Controllers\Sosmed;
+use App\Http\Controllers\Konfigurasi;
 use App\Http\Controllers\Konten;
 use Illuminate\Support\Facades\Route;
 
@@ -41,7 +42,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/kategori/tambah', [Kategori::class, 'store'])->name('kategori_tambah');
     Route::post('/kategori/edit', [Kategori::class, 'edit'])->name('kategori_edit');
     Route::get('/kategori/hapus/{id?}', [Kategori::class, 'hapus'])->name('kategori_hapus');
-    
+
     Route::get('/konten', [Konten::class, 'index'])->name('konten');
     Route::get('/konten/tambah', [Konten::class, 'tambah'])->name('konten_tambah');
     Route::get('/konten/edit/{id?}', [Konten::class, 'edit'])->name('konten_edit');
@@ -53,6 +54,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/sosmed/tambah', [Sosmed::class, 'store'])->name('sosmed_tambah');
     Route::post('/sosmed/edit', [Sosmed::class, 'edit'])->name('sosmed_edit');
     Route::get('/sosmed/hapus/{id?}', [Sosmed::class, 'hapus'])->name('sosmed_hapus');
+    
+    // konfigurasi route
+    Route::get('/konfigurasi', [Konfigurasi::class, 'index'])->name('konfigurasi');
 
     Route::post('/user/logout', [User::class, 'logout'])->name('user_logout');
 });
