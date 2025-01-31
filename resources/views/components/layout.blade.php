@@ -50,23 +50,33 @@
         <div class="sidebar-menu">
             <ul id="accordion-menu">
                 <li>    
-                    <a href="{{ url('home') }}" class="dropdown-toggle no-arrow">
+                    <a href="{{ url('home') }}" @class(["dropdown-toggle", "no-arrow", "active" => $pointer == 1])>
                         <span class="micon dw dw-house-1"></span><span class="mtext">Home</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('user') }}" class="dropdown-toggle no-arrow">
+                    <a href="{{ route('user') }}" @class(["dropdown-toggle", "no-arrow", "active" => $pointer == 2])>
                         <span class="micon dw dw-user2"></span><span class="mtext">User</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('kategori') }}" class="dropdown-toggle no-arrow">
+                    <a href="{{ route('kategori') }}" @class(["dropdown-toggle", "no-arrow", "active" => $pointer == 3])>
                         <span class="micon dw dw-list3"></span><span class="mtext">Kategori</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('konten') }}" class="dropdown-toggle no-arrow">
+                    <a href="{{ route('konten') }}" @class(["dropdown-toggle", "no-arrow", "active" => $pointer == 4])>
                         <span class="micon dw dw-newspaper-1"></span><span class="mtext">Berita</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="drthdr" @class(["dropdown-toggle", "no-arrow", "active" => $pointer == 5])>
+                        <span class="micon dw dw-settings2"></span><span class="mtext">Konfigurasi</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('sosmed') }}" @class(["dropdown-toggle", "no-arrow", "active" => $pointer == 6])>
+                        <span class="micon dw dw-chat-11"></span><span class="mtext">Link Sosmed</span>
                     </a>
                 </li>
             </ul>

@@ -39,7 +39,7 @@ class Konten extends Controller
 
     public function store(Request $req){
         $req->validate([
-            'judul' => 'required',
+            'judul' => 'required|unique:berita,judul',
             'id_kategori' => 'required',
             'keterangan' => 'required',
         ]);
@@ -47,10 +47,10 @@ class Konten extends Controller
         try{
             $gambar = $req->file('gambar');
             if($gambar == null){
-                return redirect(route('konten'))->withErrors('Sertakan Gambar sampul!');
+                return redirect()->back()->withErrors('Sertakan Gambar sampul!')->withInput();
             }
             if($gambar->getSize() > (1024*1024)){
-                return redirect(route('konten'))->withErrors('Ukuran gambar melebihi 1MB');
+                return redirect()->back()->withErrors('Ukuran gambar melebihi 1MB')->withInput();
             }
 
             $path = $gambar->store('upload/konten');
@@ -67,13 +67,13 @@ class Konten extends Controller
             
             return redirect(route('konten'))->with('alert', 'Berhasil menambahkan berita');
         } catch (\Throwable $th) {
-            return redirect(route('konten'))->withErrors($th->getMessage());
+            return redirect()->back()->withErrors($th->getMessage())->withInput();
         }
     }
     public function change(Request $req){
         $req->validate([
             'id' => 'required|exists:berita,id',
-            'judul' => 'required',
+            'judul' => 'required|unique:berita,judul,'.$req->id.',id',
             'id_kategori' => 'required',
             'keterangan' => 'required',
         ]);
@@ -88,7 +88,7 @@ class Konten extends Controller
             $gambar = $req->file('gambar');
             if($gambar != null){
                 if($gambar->getSize() > (1024*1024)){
-                    return redirect(route('konten'))->withErrors('Ukuran gambar melebihi 1MB');
+                    return redirect()->back()->withErrors('Ukuran gambar melebihi 1MB')->withInput();
                 }
                 
                 Storage::delete($berita->gambar);
@@ -98,15 +98,17 @@ class Konten extends Controller
             
             return redirect(route('konten'))->with('alert', 'Berhasil mengedit berita');
         } catch (\Throwable $th) {
-            return redirect(route('konten'))->withErrors($th->getMessage());
+            return redirect()->back()->withErrors($th->getMessage())->withInput();
         }
     }
     public function hapus($id = null){
         $berita = Berita::find($id);
         abort_if($berita == null, 404);
 
-        Storage::delete($berita->gambar);
+        if($berita->gambar){
+            Storage::delete($berita->gambar);
+        }
         Berita::destroy($id);
-        return redirect(route('konten'))->with('alert', 'Berhasil menghapus berita');
+        return redirect()->back()->with('alert', 'Berhasil menghapus berita');
     }
 }

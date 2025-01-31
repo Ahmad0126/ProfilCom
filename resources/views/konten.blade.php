@@ -1,5 +1,5 @@
-<x-root  :title="$title">
-    <x-layout :search="$search ?? null">
+<x-root :title="$title">
+    <x-layout :search="$search ?? null" :pointer="4">
         <div class="page-header">
             <div class="row align-items-center">
                 <div class="col-md-6 col-sm-12">

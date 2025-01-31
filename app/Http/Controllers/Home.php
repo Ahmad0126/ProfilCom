@@ -10,13 +10,11 @@ class Home extends Controller
 {
     public function index(){
         $data['title'] = 'nama_app';
-        $data['kategori'] = Kategori::all();
         $data['berita'] = Berita::get_latest_konten();
         return view('welcome', $data);
     }
     public function berita(Request $req){
         $data['title'] = 'Berita | nama_app';
-        $data['kategori'] = Kategori::all();
         $data['kategori_sidebar'] = Kategori::get_kategori_and_jumlah_kontennya(5);
 
         $search = $req->query('search');
@@ -36,7 +34,6 @@ class Home extends Controller
         abort_if($data['berita']->isEmpty(), 404);
 
         $data['title'] = 'Berita '.$nama.' | nama_app';
-        $data['kategori'] = Kategori::all();
         $data['latest_berita'] = Berita::get_latest_konten();
         $data['kategori_sidebar'] = Kategori::get_kategori_and_jumlah_kontennya(5);
         $data['kategori_active'] = $nama;
@@ -44,7 +41,6 @@ class Home extends Controller
     }
     public function profile(){
         $data['title'] = 'Profil | nama_app';
-        $data['kategori'] = Kategori::all();
         return view('profile', $data);
     }
     public function detail($slug){
@@ -52,7 +48,6 @@ class Home extends Controller
         abort_if($data['berita'] == null, 404);
 
         $data['title'] = $data['berita']->judul.' | nama_app';
-        $data['kategori'] = Kategori::all();
         $data['latest_berita'] = Berita::get_latest_konten();
         $data['kategori_sidebar'] = Kategori::get_kategori_and_jumlah_kontennya(5);
         $data['kategori_active'] = $data['berita']->kategori;

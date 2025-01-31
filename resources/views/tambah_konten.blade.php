@@ -1,5 +1,5 @@
 <x-root :title="$title">
-    <x-layout>
+    <x-layout :pointer="4">
         <div class="blog-wrap">
             <div class="container pd-0">
                 <div class="row">
@@ -12,6 +12,11 @@
                                 height: 100vh !important;
                             }
                         </style>
+                        @php
+                            $konten->judul = old('judul') ?? $konten->judul;
+                            $konten->id_kategori = old('id_kategori') ?? $konten->id_kategori;
+                            $konten->keterangan = old('keterangan') ?? $konten->keterangan;
+                        @endphp
                         <div class="blog-detail card-box overflow-hidden mb-30">
                             <form action="{{ $konten->id ? route('konten_change') : route('konten_store') }}" method="post" enctype="multipart/form-data">
                                 <div class="card-header">

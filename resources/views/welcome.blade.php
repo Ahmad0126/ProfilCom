@@ -1,5 +1,5 @@
 <x-root :title="$title">
-    <x-front-layout :kategori="$kategori">
+    <x-front-layout>
         <style>
             #content {
                 padding-top: 30px;

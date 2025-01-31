@@ -1,5 +1,5 @@
 <x-root :title="$title">
-	<x-layout>
+	<x-layout :pointer="2">
 		<div class="pd-20 card-box mb-30">
 			<div class="clearfix mb-20">
 				<div class="pull-left">

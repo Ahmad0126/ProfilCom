@@ -1,5 +1,5 @@
 <x-root :title="$title">
-    <x-front-layout :kategori="$kategori">
+    <x-front-layout>
         <div class="container-fluid" id="content">
             <div class="row pd-ltr-20 xs-pd-20-10">
                 <div class="col-sm-12 border-1 overflow-hidden p-3 p-md-5 m-md-3 text-center">

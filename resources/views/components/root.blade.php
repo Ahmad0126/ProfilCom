@@ -36,19 +36,6 @@
     {{ $slot }}
 
     {{-- Notification Center --}}
-    <div class="modal fade" id="error" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm modal-dialog-centered">
-            <div class="modal-content bg-danger text-white">
-                <div class="modal-body text-center">
-                    <h3 class="text-white mb-15"><i class="fa fa-exclamation-triangle"></i> Error</h3>
-                    @foreach ($errors->all() as $e)
-                        <p>{{ $e }}</p>
-                    @endforeach
-                    <button type="button" class="btn btn-light" data-dismiss="modal">Ok</button>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="modal fade" id="success" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm modal-dialog-centered">
             <div class="modal-content bg-success text-white">
@@ -62,11 +49,26 @@
             </div>
         </div>
     </div>
-    @if ($errors->any())
-        <script>
-            $('#error').modal('show')
-        </script>
-    @endif
+    @isset($errors)
+        <div class="modal fade" id="error" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-dialog-centered">
+                <div class="modal-content bg-danger text-white">
+                    <div class="modal-body text-center">
+                        <h3 class="text-white mb-15"><i class="fa fa-exclamation-triangle"></i> Error</h3>
+                        @foreach ($errors->all() as $e)
+                            <p>{{ $e }}</p>
+                        @endforeach
+                        <button type="button" class="btn btn-light" data-dismiss="modal">Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @if ($errors->any())
+            <script>
+                $('#error').modal('show')
+            </script>
+        @endif
+    @endisset
     @if (session('alert'))
         <script>
             $('#success').modal('show')

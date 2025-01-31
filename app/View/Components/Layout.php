@@ -12,7 +12,8 @@ class Layout extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public $search = null
+        public $search = null,
+        public $pointer = null
     ){}
 
     /**

@@ -15,7 +15,7 @@ class Kategori extends Controller
     }
     public function store(Request $req):RedirectResponse {
         $req->validate([
-            'nama' => 'required|max:255',
+            'nama' => 'required|max:255|unique:kategori,nama',
         ]);
 
         try {
