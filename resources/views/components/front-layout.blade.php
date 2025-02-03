@@ -195,7 +195,7 @@
 <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light border-2 border-bottom  p-2" aria-label="Main navigation">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ route('base') }}">
-            <img src="{{ asset('vendors/images/deskapp-logo.svg') }}" alt="">
+            <img src="{{ asset('storage/'.$konfig->logo) }}" alt="Brand Logo">
         </a>
         <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -203,11 +203,16 @@
 
         <div class="navbar-collapse offcanvas-collapse ms-2" id="offcanvasNavbar">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                @auth
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
+                    <a class="nav-link" aria-current="page" href="{{ route('home') }}">Dashboard</a>
                 </li>
+                @endauth
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route("profile") }}">Profil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route("base") }}#visi-misi">Visi Misi</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Berita</a>
@@ -217,6 +222,9 @@
                             <li><a class="dropdown-item" href="{{ route('berita_kategori', $k->nama) }}">{{ $k->nama }}</a></li>
                         @endforeach
                     </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact">Kontak</a>
                 </li>
             </ul>
             <form class="d-flex gap-1 form-horizontal" action="{{ route('berita') }}" method="get" role="search">
@@ -229,36 +237,36 @@
 
 {{ $slot }}
 
-<footer class="footer py-5 mt-5 border-2 border-top  bg-light shadow">
+<footer class="footer py-5 mt-5 border-2 border-top bg-light shadow" id="contact">
     <div class="container-fluid px-lg-5">
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5">
+        <div class="row {{--row-cols-1 row-cols-sm-2 row-cols-md-5--}}">
             <section class="col mb-3">
-                <a href="/" class="d-flex align-items-center mb-3 link-body-emphasis text-decoration-none">
-                    <img src="{{ asset('vendors/images/deskapp-logo.svg') }}" alt="logo" loading="lazy">
-                </a>
+                <div class="d-flex align-items-center mb-3 link-body-emphasis text-decoration-none">
+                    <img src="{{ asset('storage/'.$konfig->logo) }}" alt="Brand Logo" loading="lazy">
+                </div>
                 <p class="text-body-secondary">
                     <small>© <script>document.write(new Date().getFullYear())</script> {{ $konfig->nama_website }}. <br> All rights reserved.</small>
                 </p>
             </section>
         
-            <section class="col mb-3">
+            <section class="col-1 mb-3">
                 <!-- nothing here. -->
             </section>
         
-            <section class="col mb-3">
-                <h5>Section</h5>
-                <ul class="nav flex-column">
+            <section class="col-2 mb-3">
+                {{-- <h5 class="mb-3">Section</h5>
+                <ul class="nav ms-0 flex-column">
                     <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Home</a></li>
                     <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Features</a></li>
                     <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Pricing</a></li>
                     <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">FAQs</a></li>
                     <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">About</a></li>
-                </ul>
+                </ul> --}}
             </section>
         
-            <section class="col mb-3 justify-content-start">
-                <h5>Social Media</h5>
-                <ul class="nav flex-column">
+            <section class="col-2 mb-3 justify-content-start">
+                <h5 class="mb-3">Social Media</h5>
+                <ul class="nav ms-0 flex-column">
                     @foreach ($sosmed as $s)
                         <li class="nav-item mb-2">
                             <a href="{{ $s->url }}" class="nav-link p-0 text-body-secondary" target="_blank">
@@ -270,14 +278,18 @@
                 </ul>
             </section>
         
-            <section class="col mb-3">
+            <section class="col mb-3 justify-content-start">
                 <h5>Get in Touch</h5>
-                <ul class="nav flex-column">
-                    <li class="nav-item mb-2">serhdrth</li>
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Features</a></li>
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Pricing</a></li>
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">FAQs</a></li>
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">About</a></li>
+                <ul class="nav ms-0 flex-column">
+                    @if ($konfig->telepon)
+                        <li class="nav-item mb-2 text-secondary"><i class="icon-copy fa fa-phone" aria-hidden="true"></i> {{ $konfig->telepon }}</li>    
+                    @endif
+                    @if ($konfig->email)
+                        <li class="nav-item mb-2 text-secondary"><i class="icon-copy fa fa-envelope" aria-hidden="true"></i> {{ $konfig->email }}</li>
+                    @endif
+                    @if ($konfig->alamat)
+                        <li class="nav-item mb-2 text-secondary">{{ $konfig->alamat }}</li>
+                    @endif
                 </ul>
             </section>
         </div>

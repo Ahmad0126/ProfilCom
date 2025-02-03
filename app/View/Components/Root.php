@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use App\Models\Konfig;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
@@ -22,6 +23,8 @@ class Root extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.root');
+        $konfig = Konfig::first() ?? new Konfig();
+        $data['favicon'] = asset('storage/'.$konfig->favicon);
+        return view('components.root', $data);
     }
 }

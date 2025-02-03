@@ -75,7 +75,7 @@ class User extends Controller
 
         if(Auth::attempt($cred)){
             $req->session()->regenerate();
-            return redirect()->intended();
+            return redirect()->intended(route('home'));
         }
 
         return redirect(route('login'))->withErrors('Login Failed')->withInput();

@@ -30,12 +30,12 @@
                                 <div class="mb-3 row g-3">
                                     <div class="col-md-6">
                                         <label for="logo" class="form-label d-block">Logo</label>
-                                        <img src="{{ asset('storage/'.$konfig->logo) }}" alt="Logo" class="img-fluid mb-2">
+                                        <img src="{{ asset('storage/'.$konfig->logo) }}" style="max-height: 75px" alt="Logo" class="img-fluid mb-2">
                                         <input name="logo" type="file" class="form-control h-auto" id="logo">
                                     </div>
                                     <div class="col-md-6">
                                         <label for="favicon" class="form-label d-block">Favicon</label>
-                                        <img src="{{ asset('storage/'.$konfig->favicon) }}" alt="Favicon" class="img-fluid mb-2">
+                                        <img src="{{ asset('storage/'.$konfig->favicon) }}" style="max-height: 75px" alt="Favicon" class="img-fluid mb-2">
                                         <input name="favicon" type="file" class="form-control h-auto" id="favicon">
                                     </div>
                                 </div>
@@ -69,7 +69,7 @@
                             <div class="col-md-5">
                                 <div class="mb-3">
                                     <label for="gambar-sambutan" class="form-label d-block">Gambar Background</label>
-                                    <img src="{{ asset('storage/'.$konfig->breadcrumb) }}" alt="Background" class="img-fluid mb-2">
+                                    <img src="{{ asset('storage/'.$konfig->breadcrumb) }}" alt="Background" class="img-fluid mb-2" style="max-height: 225px">
                                     <input name="breadcrumb" type="file" class="form-control h-auto" id="gambar-sambutan">
                                 </div>
                             </div>
@@ -102,7 +102,7 @@
                             <div class="col-md-5">
                                 <div class="mb-3">
                                     <label for="gambar-samping" class="form-label d-block">Gambar Visi Misi</label>
-                                    <img src="{{ asset('storage/'.$konfig->gambar_visi) }}" alt="Logo" class="img-fluid mb-2">
+                                    <img src="{{ asset('storage/'.$konfig->gambar_visi) }}" alt="Logo" class="img-fluid mb-2" style="max-height: 355px">
                                     <input name="gambar_visi" type="file" class="form-control h-auto" id="gambar-samping">
                                 </div>
                             </div>

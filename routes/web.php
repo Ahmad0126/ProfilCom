@@ -33,6 +33,11 @@ Route::get('/berita/kategori/{nama?}', [Home::class, 'kategori'])->name('berita_
 Route::get('/berita/{slug?}', [Home::class, 'detail'])->name('berita_detail');
 
 Route::middleware('auth')->group(function () {
+    //home route
+    Route::get('/home', function(){
+        return view('home');
+    })->name('home');
+
     Route::get('/user', [User::class, 'index'])->name('user');
     Route::post('/user/tambah', [User::class, 'store'])->name('user_tambah');
     Route::post('/user/edit', [User::class, 'edit'])->name('user_edit');

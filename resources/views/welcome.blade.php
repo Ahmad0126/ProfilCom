@@ -107,6 +107,11 @@
             .jumbotron-overlay {
                 background-color: rgba(0, 0, 0, 0.256);
             }
+
+            ul, ol{
+                list-style: auto;
+                margin-left: 1.5rem;
+            }
         </style>
 
         <div class="jumbotron p-5 mb-4 bg-light border border-1 border-top-0 rounded-3"
@@ -121,7 +126,7 @@
 
         <div class="container-fluid" id="content">
             <section class="section-wrapper" id="aboutme-section">
-                <div class="section-heading">
+                <div class="section-heading" id="visi-misi">
                     <h5 class="section-title rounded-4 px-4 ms-2">Visi dan Misi</h5>
                 </div>
                 <div class="section-content-for-blog">
@@ -132,10 +137,7 @@
                             </section>
                         </div>
                         <div class="col-md-8">
-                            <section class="section-content-for-blog">
-                                <h1 class="display-3 fw-bold">Designed for engineers</h1>
-                                <h3 class="fw-normal text-muted mb-3">Build anything you want with Aperture</h3>
-                            </section>
+                            <section class="section-content-for-blog">{!! $konfig->visi_misi !!}</section>
                         </div>
                     </div>
                 </div>

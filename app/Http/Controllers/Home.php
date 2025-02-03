@@ -9,14 +9,20 @@ use Illuminate\Http\Request;
 
 class Home extends Controller
 {
+    private $konfig;
+
+    function __construct(){
+        $this->konfig = Konfig::first() ?? new Konfig();
+    }
+
     public function index(){
-        $data['title'] = 'nama_app';
+        $data['title'] = $this->konfig->nama_website;
         $data['berita'] = Berita::get_latest_konten();
-        $data['konfig'] = Konfig::first();
+        $data['konfig'] = $this->konfig;
         return view('welcome', $data);
     }
     public function berita(Request $req){
-        $data['title'] = 'Berita | nama_app';
+        $data['title'] = 'Berita | '.$this->konfig->nama_website;
         $data['kategori_sidebar'] = Kategori::get_kategori_and_jumlah_kontennya(5);
 
         $search = $req->query('search');
@@ -35,21 +41,22 @@ class Home extends Controller
         $data['berita'] = Berita::get_all_konten_by_kategori($nama);
         abort_if($data['berita']->isEmpty(), 404);
 
-        $data['title'] = 'Berita '.$nama.' | nama_app';
+        $data['title'] = 'Berita '.$nama.' | '.$this->konfig->nama_website;
         $data['latest_berita'] = Berita::get_latest_konten();
         $data['kategori_sidebar'] = Kategori::get_kategori_and_jumlah_kontennya(5);
         $data['kategori_active'] = $nama;
         return view('berita', $data);
     }
     public function profile(){
-        $data['title'] = 'Profil | nama_app';
+        $data['title'] = 'Profil | '.$this->konfig->nama_website;
+        $data['profil'] = $this->konfig->profil;
         return view('profile', $data);
     }
     public function detail($slug){
         $data['berita'] = Berita::get_berita_by_slug($slug);
         abort_if($data['berita'] == null, 404);
 
-        $data['title'] = $data['berita']->judul.' | nama_app';
+        $data['title'] = $data['berita']->judul.' | '.$this->konfig->nama_website;
         $data['latest_berita'] = Berita::get_latest_konten();
         $data['kategori_sidebar'] = Kategori::get_kategori_and_jumlah_kontennya(5);
         $data['kategori_active'] = $data['berita']->kategori;

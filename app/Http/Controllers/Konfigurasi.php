@@ -20,17 +20,15 @@ class Konfigurasi extends Controller
 
     public function update(Request $req)
     {
-        $konfig = Konfig::firstOrFail();
+        $konfig = Konfig::find(1) ?? new Konfig();
 
         $req->validate([
             'logo' => [
-                'required',
                 File::image()
                     ->types(['jpg', 'jpeg', 'png', 'webp', 'x-icon', 'ico', 'svg'])
                     ->max(1024)
             ],
             'favicon' => [
-                'required',
                 File::image()
                     ->types(['jpg', 'jpeg', 'png', 'webp', 'x-icon', 'ico', 'svg'])
                     ->max(1024)
@@ -54,27 +52,27 @@ class Konfigurasi extends Controller
                 File::image()
                     ->types(['jpg', 'jpeg', 'png', 'webp', 'svg'])
                     ->max(2.5 * 1024)
-                    ->dimensions(Rule::dimensions()->maxWidth(1600)->maxHeight(2564))
+                    ->dimensions(Rule::dimensions()->maxWidth(2564)->maxHeight(1600))
             ],
         ]);
 
         if ($req->hasFile('logo')) {
-            Storage::delete($konfig->logo);
+            Storage::delete($konfig->logo ?? '');
             $logo = $req->file('logo')->store('upload/konfigurasi');
         }
 
         if ($req->hasFile('favicon')) {
-            Storage::delete($konfig->favicon);
+            Storage::delete($konfig->favicon ?? '');
             $favicon = $req->file('favicon')->store('upload/konfigurasi');
         }
 
         if ($req->hasFile('gambar_visi')) {
-            Storage::delete($konfig->gambar_visi);
+            Storage::delete($konfig->gambar_visi ?? '');
             $gambar_visi = $req->file('gambar_visi')->store('upload/konfigurasi');
         }
 
         if ($req->hasFile('breadcrumb')) {
-            Storage::delete($konfig->breadcrumb);
+            Storage::delete($konfig->breadcrumb ?? '');
             $breadcrumb = $req->file('breadcrumb')->store('upload/konfigurasi');
         }
 
