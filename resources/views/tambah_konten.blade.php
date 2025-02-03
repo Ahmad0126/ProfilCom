@@ -8,7 +8,7 @@
                             ul.wysihtml5-toolbar li::before{
                                 content: '';
                             }
-                            iframe.wysihtml5-sandbox{
+                            iframe.wysihtml5-sandbox, .editor{
                                 height: 100vh !important;
                             }
                         </style>
@@ -52,7 +52,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="">Isi Keterangan</label>
-                                        <textarea class="textarea_editor form-control border-radius-0" name="keterangan" placeholder="Enter text ...">{{ $konten->keterangan }}</textarea>
+                                        <textarea class="textarea_editor form-control editor border-radius-0" name="keterangan" placeholder="Enter text ...">{{ $konten->keterangan }}</textarea>
                                     </div>
                                 </div>
                                 <div class="card-footer">

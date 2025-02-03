@@ -17,7 +17,6 @@
                 padding: 20px;
                 overflow: hidden;
                 position: relative;
-                height: 420px;
                 border: var(--bs-border-width) solid var(--bs-border-color);
                 transition: transform 0.3s ease;
             }
@@ -28,7 +27,7 @@
 
             .blog-image {
                 width: 100%;
-                height: 350px;
+                height: 300px;
                 object-fit: cover;
                 display: block;
             }
@@ -158,7 +157,7 @@
                                 @foreach ($berita as $b)
                                     <div class="swiper-slide">
                                         <div class="blog-card rounded-2">
-                                            <img src="{{ asset('storage/'.$b->gambar) }}" alt="Blog 1" class="blog-image">
+                                            <img src="{{ asset('storage/'.$b->gambar) }}" alt="Gambar Berita" class="blog-image">
                                             <div class="blog-title">
                                                 <h5>{{ $b->judul }}</h5>
                                             </div>

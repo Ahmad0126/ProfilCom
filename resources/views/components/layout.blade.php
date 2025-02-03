@@ -70,7 +70,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="drthdr" @class(["dropdown-toggle", "no-arrow", "active" => $pointer == 5])>
+                    <a href="{{ route('konfigurasi') }}" @class(["dropdown-toggle", "no-arrow", "active" => $pointer == 5])>
                         <span class="micon dw dw-settings2"></span><span class="mtext">Konfigurasi</span>
                     </a>
                 </li>
