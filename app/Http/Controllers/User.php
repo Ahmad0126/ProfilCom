@@ -67,6 +67,27 @@ class User extends Controller
             return redirect(route('user'))->withErrors($th->getMessage());
         }
     }
+    public function reset(Request $req){
+        $req->validate([
+            'id' => 'required',
+            'password_lama' => 'required',
+            'password_baru' => 'required',
+            'password_konfirmasi' => 'required',
+        ]);
+
+        $user = UserModel::find(auth()->id());
+        if(!Hash::check($req->password_lama, $user->password)){
+            return redirect()->back()->withErrors('Password Lama Salah!')->withInput();
+        }
+        if($req->password_baru != $req->password_konfirmasi){
+            return redirect()->back()->withErrors('Konfirmasi Ulang Password Baru')->withInput();
+        }
+
+        $user->password = Hash::make($req->password_baru);
+        $user->save();
+
+        return redirect(route('home'))->with('alert', 'Berhasil mereset password');
+    }
     public function login(Request $req){
         $cred = $req->validate([
             'username' => 'required',

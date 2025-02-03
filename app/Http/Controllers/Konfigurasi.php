@@ -13,7 +13,7 @@ class Konfigurasi extends Controller
     public function index()
     {
         $data['title'] = 'Konfigurasi';
-        $data['konfig'] = Konfig::first();
+        $data['konfig'] = Konfig::first() ?? new Konfig();
 
         return view('konfigurasi', $data);
     }

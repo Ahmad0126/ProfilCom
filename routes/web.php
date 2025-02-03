@@ -37,6 +37,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/home', function(){
         return view('home');
     })->name('home');
+    //change password route
+    Route::get('/password', function(){
+        return view('password');
+    })->name('password');
+    Route::post('/password/reset', [User::class, 'reset'])->name('password_reset');
 
     Route::get('/user', [User::class, 'index'])->name('user');
     Route::post('/user/tambah', [User::class, 'store'])->name('user_tambah');

@@ -300,8 +300,8 @@
     (() => {
         'use strict'
 
-        document.querySelector('#navbarSideCollapse').addEventListener('click', () => {
-            document.getElementById('.offcanvasNavbar').classList.toggle('open');
+        document.getElementById('navbarSideCollapse').addEventListener('click', () => {
+            document.getElementById('offcanvasNavbar').classList.toggle('open');
         });
     })();
 </script>
