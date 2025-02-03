@@ -54,9 +54,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/sosmed/tambah', [Sosmed::class, 'store'])->name('sosmed_tambah');
     Route::post('/sosmed/edit', [Sosmed::class, 'edit'])->name('sosmed_edit');
     Route::get('/sosmed/hapus/{id?}', [Sosmed::class, 'hapus'])->name('sosmed_hapus');
-    
+
     // konfigurasi route
     Route::get('/konfigurasi', [Konfigurasi::class, 'index'])->name('konfigurasi');
+    Route::post('/konfigurasi/update', [Konfigurasi::class, 'update'])->name('konfigurasi_update');
 
     Route::post('/user/logout', [User::class, 'logout'])->name('user_logout');
 });

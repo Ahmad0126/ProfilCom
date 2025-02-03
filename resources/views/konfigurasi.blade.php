@@ -1,6 +1,8 @@
 <x-root  :title="$title">
     <x-layout :pointer="5">
-        <form action="" method="post">
+        <form action="{{ route('konfigurasi_update') }}" method="post" enctype="multipart/form-data">
+            @csrf
+
             <div class="mb-30 row">
                 <div class="col-12 mb-20">
                     <div class="card-box pd-20">
@@ -61,7 +63,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="subjudul" class="form-label">Subjudul</label>
-                                    <textarea name="subtitle" class="form-control" id="subjudul" rows="3" cols="30" placeholder="Masukkan Subjudul">{{ $konfig->subjudul }}</textarea>
+                                    <textarea name="subjudul" class="form-control" id="subjudul" rows="3" cols="30" placeholder="Masukkan Subjudul">{{ $konfig->subjudul }}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-5">
