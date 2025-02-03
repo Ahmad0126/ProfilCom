@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Berita;
 use App\Models\Kategori;
+use App\Models\Konfig;
 use Illuminate\Http\Request;
 
 class Home extends Controller
@@ -11,6 +12,7 @@ class Home extends Controller
     public function index(){
         $data['title'] = 'nama_app';
         $data['berita'] = Berita::get_latest_konten();
+        $data['konfig'] = Konfig::first();
         return view('welcome', $data);
     }
     public function berita(Request $req){

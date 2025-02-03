@@ -3,6 +3,7 @@
 namespace App\View\Components;
 
 use App\Models\Kategori;
+use App\Models\Konfig;
 use App\Models\Sosmed;
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -24,6 +25,7 @@ class FrontLayout extends Component
     {
         $data['sosmed'] = Sosmed::all();
         $data['kategori'] = Kategori::all();
+        $data['konfig'] = Konfig::first();
         return view('components.front-layout', $data);
     }
 }

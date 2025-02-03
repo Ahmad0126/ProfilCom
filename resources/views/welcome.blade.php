@@ -95,7 +95,6 @@
             }
 
             .jumbotron {
-                background-image: url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');
                 background-size: cover;
                 background-position: center;
                 background-repeat: no-repeat;
@@ -106,20 +105,17 @@
             }
 
             .jumbotron-overlay {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
                 background-color: rgba(0, 0, 0, 0.256);
             }
         </style>
 
-        <div class="jumbotron p-5 mb-4 bg-light border border-1 border-top-0 rounded-3">
-            <div class="container-fluid py-5">
-                <div class="jumbotron-overlay rounded-3"></div>
-                <h1 class="display-5 fw-bold text-light">Custom jumbotron</h1>
-                <p class="col-md-8 fs-4 text-light">Using a series of utilities, you can create this jumbotron, just like the one in previous versions of Bootstrap. Check out the examples below for how you can remix and restyle it to your liking.</p>
+        <div class="jumbotron p-5 mb-4 bg-light border border-1 border-top-0 rounded-3"
+            style="background-image: url({{ asset('storage/'.$konfig->breadcrumb) }})">
+            <div class="container-fluid py-5 jumbotron-overlay rounded-3">
+                <div>
+                    <h1 class="display-5 fw-bold text-light">{{ $konfig->judul }}</h1>
+                    <p class="col-md-8 fs-4 text-light">{{ $konfig->subjudul }}</p>
+                </div>
             </div>
         </div>
 
@@ -132,8 +128,7 @@
                     <div class="row pd-ltr-20 xs-pd-20-10 aboutme-section-wrapper">
                         <div class="col-md-4">
                             <section class="section-image-for-blog">
-                                <h1 class="visually-hidden">Image for about me section.</h1>
-                                <img class="img-fluid border border-1 rounded-2" src="{{ asset('storage/'.str_replace('.jpg', '.png', 'upload/konten/default.png')) }}" alt="">
+                                <img class="img-fluid border border-1 rounded-2" src="{{ asset('storage/'.$konfig->gambar_visi) }}" alt="">
                             </section>
                         </div>
                         <div class="col-md-8">
@@ -158,8 +153,13 @@
                                     <div class="swiper-slide">
                                         <div class="blog-card rounded-2">
                                             <img src="{{ asset('storage/'.$b->gambar) }}" alt="Gambar Berita" class="blog-image">
+                                            <p>{{ $b->kategori }}</p>
                                             <div class="blog-title">
-                                                <h5>{{ $b->judul }}</h5>
+                                                <h5>
+                                                    <a href="{{ route('berita_detail', $b->slug) }}">
+                                                        {{ $b->judul }}
+                                                    </a>
+                                                </h5>
                                             </div>
                                         </div>
                                     </div>

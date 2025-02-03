@@ -233,12 +233,11 @@
     <div class="container-fluid px-lg-5">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5">
             <section class="col mb-3">
-                <h5 class="visually-hidden">Company logo & details.</h5>
                 <a href="/" class="d-flex align-items-center mb-3 link-body-emphasis text-decoration-none">
                     <img src="{{ asset('vendors/images/deskapp-logo.svg') }}" alt="logo" loading="lazy">
                 </a>
                 <p class="text-body-secondary">
-                    <small>© <script>document.write(new Date().getFullYear())</script> Company, Inc. All rights reserved.</small>
+                    <small>© <script>document.write(new Date().getFullYear())</script> {{ $konfig->nama_website }}. <br> All rights reserved.</small>
                 </p>
             </section>
         
@@ -272,9 +271,9 @@
             </section>
         
             <section class="col mb-3">
-                <h5>Section</h5>
+                <h5>Get in Touch</h5>
                 <ul class="nav flex-column">
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Home</a></li>
+                    <li class="nav-item mb-2">serhdrth</li>
                     <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Features</a></li>
                     <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Pricing</a></li>
                     <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">FAQs</a></li>
