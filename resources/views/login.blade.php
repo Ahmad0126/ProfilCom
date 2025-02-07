@@ -1,6 +1,6 @@
 <x-root :title="'Login | nama_app'">
 	<x-front-layout>
-		<div class="d-flex align-items-center flex-wrap justify-content-center" style="margin-top: 6.5rem;">
+		<div class="d-flex align-items-center flex-wrap justify-content-center pb-5 patterned" style="margin-top: 6.5rem;">
 			<div class="container">
 				<div class="row align-items-center">
 					<div class="col-md-6">

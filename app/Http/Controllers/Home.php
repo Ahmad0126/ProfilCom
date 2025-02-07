@@ -50,6 +50,8 @@ class Home extends Controller
     public function profile(){
         $data['title'] = 'Profil | '.$this->konfig->nama_website;
         $data['profil'] = $this->konfig->profil;
+        $data['judul'] = $this->konfig->judul_profil;
+        $data['subjudul'] = $this->konfig->subjudul_profil;
         return view('profile', $data);
     }
     public function detail($slug){

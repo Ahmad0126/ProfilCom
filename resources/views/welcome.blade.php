@@ -1,9 +1,10 @@
 <x-root :title="$title">
     <x-front-layout>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+        <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
         <style>
             #content {
-                padding-top: 30px;
+                padding-top: 3rem;
             }
 
             .blog-carousel {
@@ -13,45 +14,17 @@
             }
 
             .blog-card {
-                background: #fff;
-                padding: 20px;
-                overflow: hidden;
-                position: relative;
-                border: var(--bs-border-width) solid var(--bs-border-color);
-                transition: transform 0.3s ease;
+                transform: scale(100%);
+                transition: 0.3s ease-in;
             }
-
             .blog-card:hover {
-                transform: translateY(-5px);
+                transform: scale(104%);
+                transition: 0.3s ease-in;
             }
-
-            .blog-image {
+            .blog-img{
+                height: 270px;
                 width: 100%;
-                height: 300px;
                 object-fit: cover;
-                display: block;
-            }
-
-            .blog-title {
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                padding: 15px;
-                background: #fff;
-                color: #333;
-                font-size: 1rem;
-                font-weight: 600;
-                text-align: center;
-                display: -webkit-box;
-                -webkit-line-clamp: 2;
-                -webkit-box-orient: vertical;
-                overflow: hidden;
-                height: 70px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                border-top: var(--bs-border-width) solid var(--bs-border-color);
             }
 
             .swiper {
@@ -114,54 +87,54 @@
             }
         </style>
 
-        <div class="jumbotron p-5 mb-4 bg-light border border-1 border-top-0 rounded-3"
-            style="background-image: url({{ asset('storage/'.$konfig->breadcrumb) }})">
+        <div class="jumbotron p-5 mb-0 bg-light rounded-3 rounded-top-0"
+            style="background-image: url({{ asset('storage/'.$konfig->breadcrumb) }}); background-attachment: fixed;">
             <div class="container-fluid py-5 jumbotron-overlay rounded-3">
                 <div>
-                    <h1 class="display-5 fw-bold text-light">{{ $konfig->judul }}</h1>
+                    <h1 class="display-4 fw-bold text-light">{{ $konfig->judul }}</h1>
                     <p class="col-md-8 fs-4 text-light">{{ $konfig->subjudul }}</p>
                 </div>
             </div>
         </div>
 
-        <div class="container-fluid" id="content">
+        <div class="container-fluid pb-5 patterned" id="content">
             <section class="section-wrapper" id="aboutme-section">
-                <div class="section-heading" id="visi-misi">
-                    <h5 class="section-title rounded-4 px-4 ms-2">Visi dan Misi</h5>
+                <div class="section-heading text-center mb-4" id="visi-misi" data-aos="fade-up">
+                    <h5 class="display-4 fw-bold"><span class="text-info">Visi</span> dan Misi</h5>
                 </div>
-                <div class="section-content-for-blog">
+                <div class="section-content-for-blog card-box pb-20" data-aos="fade-up">
                     <div class="row pd-ltr-20 xs-pd-20-10 aboutme-section-wrapper">
-                        <div class="col-md-4">
-                            <section class="section-image-for-blog">
-                                <img class="img-fluid border border-1 rounded-2" src="{{ asset('storage/'.$konfig->gambar_visi) }}" alt="">
+                        <div class="col-md-4 mb-4 mb-md-0 px-4 px-md-3">
+                            <section class="section-image-for-blog d-flex justify-content-center d-md-block">
+                                <img class="img-fluid rounded-2" src="{{ asset('storage/'.$konfig->gambar_visi) }}" alt="">
                             </section>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-8 px-4 px-md-3">
                             <section class="section-content-for-blog">{!! $konfig->visi_misi !!}</section>
                         </div>
                     </div>
                 </div>
             </section>
-            <section class="section-wrapper" id="berita-section">
-                <div class="section-heading">
-                    <h5 class="section-title rounded-4 px-4 ms-2">Berita</h5>
+            <section class="section-wrapper mt-2" id="berita-section">
+                <div class="section-heading text-center" id="visi-misi" data-aos="fade-up">
+                    <h5 class="display-4 fw-bold">Berita <span class="text-info">terbaru</span> </h5>
                 </div>
-                <div class="section-content">
+                <div class="section-content" data-aos="fade-up">
                     <div class="blog-carousel">
                         <div class="swiper">
                             <div class="swiper-wrapper">
                                 <!-- Blog cards will be repeated to show the loop effect -->
                                 @foreach ($berita as $b)
                                     <div class="swiper-slide">
-                                        <div class="blog-card rounded-2">
-                                            <img src="{{ asset('storage/'.$b->gambar) }}" alt="Gambar Berita" class="blog-image">
-                                            <p>{{ $b->kategori }}</p>
-                                            <div class="blog-title">
-                                                <h5>
-                                                    <a href="{{ route('berita_detail', $b->slug) }}">
+                                        <div class="card-box blog-card">
+                                            <img src="{{ asset('storage/'.$b->gambar) }}" alt="Gambar Berita" class="card-img-top blog-img">
+                                            <div class="card-body">
+                                                <p class="card-text text-info fw-bold">{{ $b->kategori }}</p>
+                                                <a href="{{ route('berita_detail', $b->slug) }}">
+                                                    <h5 class="card-title">
                                                         {{ $b->judul }}
-                                                    </a>
-                                                </h5>
+                                                    </h5>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
@@ -172,12 +145,20 @@
                             <div class="swiper-pagination"></div>
                         </div>
                     </div>
+                    <div class="d-flex justify-content-center">
+                        <a href="{{ route('berita') }}" class="btn btn-light btn-rounded">Berita Lainnya <i class="icon-copy ion-arrow-right-c"></i></a>
+                    </div>
                 </div>
             </section>
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+        <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
         <script>
+            AOS.init({
+                duration: 1000
+            });
+
             const swiper = new Swiper('.swiper', {
             slidesPerView: 'auto',
             speed: 800,

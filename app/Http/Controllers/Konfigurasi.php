@@ -87,9 +87,11 @@ class Konfigurasi extends Controller
         $konfig->email = $req->email;
         $konfig->alamat  =  $req->alamat;
         $konfig->profil = $req->profil;
+        $konfig->judul_profil = $req->judul_profil;
+        $konfig->subjudul_profil = $req->subjudul_profil;
         $konfig->breadcrumb = $breadcrumb ?? $konfig->breadcrumb;
         $konfig->save();
 
-        return redirect('/konfigurasi')->with('success', 'Data berhasil diubah');
+        return redirect('/konfigurasi')->with('alert', 'Data berhasil diubah');
     }
 }

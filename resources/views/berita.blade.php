@@ -64,16 +64,6 @@
                             </ul>
                         </div>
                     </section>
-                    <section class="card-box  overflow-hidden">
-                        <h5 class="pd-20 h5 mb-0">Archives</h5>
-                        <div class="list-group">
-                            <a href="#" class="list-group-item rounded-0 d-flex align-items-center justify-content-between">January 2020</a>
-                            <a href="#" class="list-group-item rounded-0 d-flex align-items-center justify-content-between">February 2020</a>
-                            <a href="#" class="list-group-item rounded-0 d-flex align-items-center justify-content-between">March 2020</a>
-                            <a href="#" class="list-group-item rounded-0 d-flex align-items-center justify-content-between">April 2020</a>
-                            <a href="#" class="list-group-item rounded-0 d-flex align-items-center justify-content-between">May 2020</a>
-                        </div>
-                    </section>
                 </div>
             </div>
         </div>

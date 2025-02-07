@@ -73,20 +73,17 @@
         color: rgba(255, 255, 255, .75);
     }
 
-    .nav-scroller .nav-link {
+    .nav-link {
         padding-top: .75rem;
         padding-bottom: .75rem;
-        font-size: .875rem;
-        color: #6c757d;
+        font-size: 1.09rem;
     }
 
-    .nav-scroller .nav-link:hover {
-        color: #007bff;
+    .nav-link:hover, .nav-link.show {
+        color: #007bff !important;
     }
-
-    .nav-scroller .active {
-        font-weight: 500;
-        color: #343a40;
+    .nav-link:focus {
+        color: #6c757d !important;
     }
 
     .blog-list ul li,
@@ -98,12 +95,17 @@
         border-radius: 0 0 10px 10px !important;
     }
 
-    .footer {
+    /* .footer {
         border-radius: 25px 25px 0 0;
-    }
+    } */
 
     .navbar {
-        border-radius: 0 0 10px 10px;
+        border-bottom: 1px solid #d4d4d4;
+    }
+
+    .bg-nav{
+        background-color: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(5px);
     }
 
     .footer .container-fluid .row .col {
@@ -156,6 +158,10 @@
         }
     }
 
+    .patterned {
+        background-image: linear-gradient(0deg, #17a2b8, transparent, transparent);
+    }
+
     .jumbotron {
         margin-top: 66px;
     }
@@ -192,7 +198,7 @@
     }
 </style>
 <!-- style custom -->
-<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light border-2 border-bottom  p-2" aria-label="Main navigation">
+<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-nav p-2" id="navbar" aria-label="Main navigation">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ route('base') }}">
             <img src="{{ asset('storage/'.$konfig->logo) }}" alt="Brand Logo">
@@ -202,17 +208,17 @@
         </button>
 
         <div class="navbar-collapse offcanvas-collapse ms-2" id="offcanvasNavbar">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav me-auto ms-auto mb-2 mb-lg-0">
                 @auth
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{{ route('home') }}">Dashboard</a>
+                    <a class="nav-link" href="{{ route('home') }}">Dashboard</a>
                 </li>
                 @endauth
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route("profile") }}">Profil</a>
+                    <a class="nav-link" href="{{ route("base") }}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route("base") }}#visi-misi">Visi Misi</a>
+                    <a class="nav-link" href="{{ route("profile") }}">Profil</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Berita</a>
@@ -228,8 +234,8 @@
                 </li>
             </ul>
             <form class="d-flex gap-1 form-horizontal" action="{{ route('berita') }}" method="get" role="search">
-                <input class="form-control" type="search" name="search" placeholder="Search" aria-label="Search" value="{{ $search }}">
-                <button class="btn btn-outline-primary" type="submit">Search</button>
+                <input class="form-control form-control-info" type="search" name="search" placeholder="Search" aria-label="Search" value="{{ $search }}">
+                <button class="btn btn-outline-info" type="submit">Search</button>
             </form>
         </div>
     </div>
@@ -237,39 +243,34 @@
 
 {{ $slot }}
 
-<footer class="footer py-5 mt-5 border-2 border-top bg-light shadow" id="contact">
+<footer class="footer py-5 shadow bg-info" style="border-top: 5px solid #21b7ce;" id="contact">
     <div class="container-fluid px-lg-5">
-        <div class="row {{--row-cols-1 row-cols-sm-2 row-cols-md-5--}}">
-            <section class="col mb-3">
+        <div class="row" data-aos="fade-up">
+            <section class="col-12 col-sm-6 col-md-4 mb-3">
                 <div class="d-flex align-items-center mb-3 link-body-emphasis text-decoration-none">
                     <img src="{{ asset('storage/'.$konfig->logo) }}" alt="Brand Logo" loading="lazy">
                 </div>
-                <p class="text-body-secondary">
+                <p class="text-light">
                     <small>© <script>document.write(new Date().getFullYear())</script> {{ $konfig->nama_website }}. <br> All rights reserved.</small>
                 </p>
             </section>
-        
-            <section class="col-1 mb-3">
-                <!-- nothing here. -->
-            </section>
-        
-            <section class="col-2 mb-3">
-                {{-- <h5 class="mb-3">Section</h5>
+            <section class="col-6 col-sm-3 col-md-2 mb-3">
+                <h5 class="mb-3 text-light">Quick Links</h5>
                 <ul class="nav ms-0 flex-column">
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Home</a></li>
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Features</a></li>
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Pricing</a></li>
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">FAQs</a></li>
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">About</a></li>
-                </ul> --}}
+                    <li class="nav-item mb-2"><a href="{{ route('base') }}" class="nav-link p-0 text-light">Home</a></li>
+                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-light">Features</a></li>
+                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-light">Pricing</a></li>
+                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-light">FAQs</a></li>
+                    <li class="nav-item mb-2"><a href="{{ route('profile') }}" class="nav-link p-0 text-light">About</a></li>
+                </ul>
             </section>
         
-            <section class="col-2 mb-3 justify-content-start">
-                <h5 class="mb-3">Social Media</h5>
+            <section class="col-6 col-sm-3 col-md-2 mb-3 justify-content-start">
+                <h5 class="mb-3 text-light">Social Media</h5>
                 <ul class="nav ms-0 flex-column">
                     @foreach ($sosmed as $s)
                         <li class="nav-item mb-2">
-                            <a href="{{ $s->url }}" class="nav-link p-0 text-body-secondary" target="_blank">
+                            <a href="{{ $s->url }}" class="nav-link p-0 text-light" target="_blank">
                                 <img src="{{ asset('storage/'.$s->logo) }}" alt="" width="23px">
                                 {{ $s->nama_sosmed }}
                             </a>
@@ -278,17 +279,17 @@
                 </ul>
             </section>
         
-            <section class="col mb-3 justify-content-start">
-                <h5>Get in Touch</h5>
+            <section class="col-12 col-md-4 mb-3 justify-content-start">
+                <h5 class="mb-3 text-light">Contact Us</h5>
                 <ul class="nav ms-0 flex-column">
                     @if ($konfig->telepon)
-                        <li class="nav-item mb-2 text-secondary"><i class="icon-copy fa fa-phone" aria-hidden="true"></i> {{ $konfig->telepon }}</li>    
+                        <li class="nav-item mb-2 text-light"><i class="icon-copy fa fa-phone" aria-hidden="true"></i> {{ $konfig->telepon }}</li>    
                     @endif
                     @if ($konfig->email)
-                        <li class="nav-item mb-2 text-secondary"><i class="icon-copy fa fa-envelope" aria-hidden="true"></i> {{ $konfig->email }}</li>
+                        <li class="nav-item mb-2 text-light"><i class="icon-copy fa fa-envelope" aria-hidden="true"></i> {{ $konfig->email }}</li>
                     @endif
                     @if ($konfig->alamat)
-                        <li class="nav-item mb-2 text-secondary">{{ $konfig->alamat }}</li>
+                        <li class="nav-item mb-2 text-light">{{ $konfig->alamat }}</li>
                     @endif
                 </ul>
             </section>
@@ -302,6 +303,8 @@
 
         document.getElementById('navbarSideCollapse').addEventListener('click', () => {
             document.getElementById('offcanvasNavbar').classList.toggle('open');
+            document.getElementById('navbar').classList.toggle('bg-light');
+            document.getElementById('navbar').classList.toggle('bg-nav');
         });
     })();
 </script>

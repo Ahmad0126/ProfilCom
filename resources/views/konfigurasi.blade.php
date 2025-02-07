@@ -117,6 +117,21 @@
                                 <h4 class="text-blue h4 mb-3">Profil</h4>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Judul</label>
+                                    <input name="judul_profil" type="text" class="form-control" value="{{ $konfig->judul_profil }}" placeholder="Masukkan Judul">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Subjudul</label>
+                                    <input name="subjudul_profil" type="text" class="form-control" value="{{ $konfig->subjudul_profil }}" placeholder="Masukkan Subjudul">
+                                </div>
+                            </div>
+                        </div>
+                        <label for="">Konten</label>
                         <textarea name="profil" class="profil form-control editor border-radius-0" placeholder="Buat Profil ...">{{ $konfig->profil }}</textarea>
                     </div>
                 </div>
