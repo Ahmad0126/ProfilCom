@@ -36,6 +36,7 @@
                     </div>
                     <div class="blog-pagination" style="overflow-x: scroll">
                         {{ $berita->onEachSide(1)->links('pagination.custom') }}
+                        <p class="text-center">Menampilkan data {{ $berita->firstItem() }}-{{ $berita->lastItem() }} dari {{ $berita->total() }}</p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-5 col-sm-12">

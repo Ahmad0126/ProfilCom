@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Cabang;
 use App\Http\Controllers\Home;
 use App\Http\Controllers\User;
 use App\Http\Controllers\Kategori;
@@ -68,6 +69,13 @@ Route::middleware('auth')->group(function () {
     // konfigurasi route
     Route::get('/konfigurasi', [Konfigurasi::class, 'index'])->name('konfigurasi');
     Route::post('/konfigurasi/update', [Konfigurasi::class, 'update'])->name('konfigurasi_update');
+
+    // map
+    Route::get('/mapcabang', [Cabang::class, 'index'])->name('cabang');
+    Route::get('/mapcabang/tambah', function(){
+        return view('admin.map_cabang_form');
+    })->name('cabang_tambah');
+    Route::post('/mapcabang/store', [Cabang::class, 'store'])->name('cabang_store');
 
     Route::post('/user/logout', [User::class, 'logout'])->name('user_logout');
 });

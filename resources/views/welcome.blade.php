@@ -104,12 +104,12 @@
                 </div>
                 <div class="section-content-for-blog card-box pb-20" data-aos="fade-up">
                     <div class="row pd-ltr-20 xs-pd-20-10 aboutme-section-wrapper">
-                        <div class="col-md-4 mb-4 mb-md-0 px-4 px-md-3">
+                        <div class="col-md-6 col-lg-4 mb-4 mb-md-0 px-4 px-md-3">
                             <section class="section-image-for-blog d-flex justify-content-center d-md-block">
                                 <img class="img-fluid rounded-2" src="{{ asset('storage/'.$konfig->gambar_visi) }}" alt="">
                             </section>
                         </div>
-                        <div class="col-md-8 px-4 px-md-3">
+                        <div class="col-md-6 col-lg-8 px-4 px-md-3">
                             <section class="section-content-for-blog">{!! $konfig->visi_misi !!}</section>
                         </div>
                     </div>

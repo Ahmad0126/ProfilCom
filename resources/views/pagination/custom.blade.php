@@ -1,5 +1,5 @@
 @if ($paginator->hasPages())
-    <div class="btn-toolbar justify-content-center mb-15">
+    <div class="btn-toolbar justify-content-center mb-1">
         <div class="btn-group">
             {{-- Previous Page Link --}}
             @if ($paginator->onFirstPage())
