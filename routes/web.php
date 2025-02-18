@@ -47,24 +47,24 @@ Route::middleware('auth')->group(function () {
     Route::get('/user', [User::class, 'index'])->name('user');
     Route::post('/user/tambah', [User::class, 'store'])->name('user_tambah');
     Route::post('/user/edit', [User::class, 'edit'])->name('user_edit');
-    Route::get('/user/hapus/{id?}', [User::class, 'hapus'])->name('user_hapus');
+    Route::get('/user/hapus/{id}', [User::class, 'hapus'])->name('user_hapus');
 
     Route::get('/kategori', [Kategori::class, 'index'])->name('kategori');
     Route::post('/kategori/tambah', [Kategori::class, 'store'])->name('kategori_tambah');
     Route::post('/kategori/edit', [Kategori::class, 'edit'])->name('kategori_edit');
-    Route::get('/kategori/hapus/{id?}', [Kategori::class, 'hapus'])->name('kategori_hapus');
+    Route::get('/kategori/hapus/{id}', [Kategori::class, 'hapus'])->name('kategori_hapus');
 
     Route::get('/konten', [Konten::class, 'index'])->name('konten');
     Route::get('/konten/tambah', [Konten::class, 'tambah'])->name('konten_tambah');
-    Route::get('/konten/edit/{id?}', [Konten::class, 'edit'])->name('konten_edit');
-    Route::get('/konten/hapus/{id?}', [Konten::class, 'hapus'])->name('konten_hapus');
+    Route::get('/konten/edit/{id}', [Konten::class, 'edit'])->name('konten_edit');
+    Route::get('/konten/hapus/{id}', [Konten::class, 'hapus'])->name('konten_hapus');
     Route::post('/konten/store', [Konten::class, 'store'])->name('konten_store');
     Route::post('/konten/change', [Konten::class, 'change'])->name('konten_change');
 
     Route::get('/sosmed', [Sosmed::class, 'index'])->name('sosmed');
     Route::post('/sosmed/tambah', [Sosmed::class, 'store'])->name('sosmed_tambah');
     Route::post('/sosmed/edit', [Sosmed::class, 'edit'])->name('sosmed_edit');
-    Route::get('/sosmed/hapus/{id?}', [Sosmed::class, 'hapus'])->name('sosmed_hapus');
+    Route::get('/sosmed/hapus/{id}', [Sosmed::class, 'hapus'])->name('sosmed_hapus');
 
     // konfigurasi route
     Route::get('/konfigurasi', [Konfigurasi::class, 'index'])->name('konfigurasi');
@@ -72,10 +72,12 @@ Route::middleware('auth')->group(function () {
 
     // map
     Route::get('/mapcabang', [Cabang::class, 'index'])->name('cabang');
-    Route::get('/mapcabang/tambah', function(){
-        return view('admin.map_cabang_form');
-    })->name('cabang_tambah');
+    Route::get('/mapcabang/tambah', [Cabang::class, 'tambah'])->name('cabang_tambah');
     Route::post('/mapcabang/store', [Cabang::class, 'store'])->name('cabang_store');
+    Route::post('/mapcabang/update', [Cabang::class, 'update'])->name('cabang_update');
+    Route::get('/mapcabang/edit/{id}', [Cabang::class, 'edit'])->name('cabang_edit');
+    Route::get('/mapcabang/hapus/{id}', [Cabang::class, 'hapus'])->name('cabang_hapus');
+    Route::get('/mapcabang/api/info', [Cabang::class, 'info'])->name('cabang_api');
 
     Route::post('/user/logout', [User::class, 'logout'])->name('user_logout');
 });

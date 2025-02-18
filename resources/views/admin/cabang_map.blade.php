@@ -1,10 +1,18 @@
 <x-root :title="$title">
+    @php
+        function format_14($number) {
+            $numberStr = (string) abs($number);  // Konversi ke string untuk menghitung digit
+            $beforeDecimal = strpos($numberStr, '.') !== false ? strpos($numberStr, '.') : strlen($numberStr);
+            $maxDecimals = max(14 - $beforeDecimal, 0);  // Hitung sisa digit untuk bagian desimal
+            return round($number, $maxDecimals);
+        }
+    @endphp
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <x-layout>
+    <x-layout :pointer="7">
         <style>
             .header{
-                z-index: 2000;
+                z-index: 1001;
             }
         </style>
         <div class="pd-20 card-box mb-30">
@@ -12,7 +20,10 @@
                 <h4 class="text-blue h4 mb-3 text-center">Peta Cabang</h4>
             </div>
             <div class="row">
-                <div class="col-5">
+                <div class="col-12 col-md-6 col-lg-7">
+                    <div style="height: 375px; overflow: hidden;" id="map"></div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-5">
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -22,23 +33,25 @@
                         <tbody>
                             <tr>
                                 <td>Nama Cabang</td>
-                                <td>Nama Cabang</td>
+                                <td class="tempat_info" id="nama">-</td>
                             </tr>
                             <tr>
-                                <td>Koordinat Lat</td>
-                                <td>Koordinat Lat</td>
+                                <td>Kode Cabang</td>
+                                <td class="tempat_info" id="kode">-</td>
                             </tr>
                             <tr>
-                                <td>Koordinat Long</td>
-                                <td>Koordinat Long</td>
+                                <td>Fasilitas</td>
+                                <td class="tempat_info" id="fasilitas">-</td>
+                            </tr>
+                            <tr>
+                                <td>Alamat</td>
+                                <td class="tempat_info" id="alamat">-</td>
                             </tr>
                         </tbody>
                     </table>
-                    <button class="btn btn-primary">Edit</button>
-                    <button class="btn btn-danger">Hapus</button>
-                </div>
-                <div class="col-7">
-                    <div style="height: 375px; overflow: hidden;" id="map"></div>
+                    <div id="tempat_alert"></div>
+                    <a href="javascript:void(0)" data-url="{{ route('cabang_edit', '') }}" class="action_info btn btn-primary">Edit</a>
+                    <a href="javascript:void(0)" data-url="{{ route('cabang_hapus', '') }}" class="action_info btn btn-danger" onclick="return confirm('Yakin ingin menghapus cabang ini?')">Hapus</a>
                 </div>
             </div>
         </div>
@@ -78,13 +91,14 @@
 											<i class="dw dw-more"></i>
 										</a>
 										<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                            <a class="dropdown-item" href="#">
+                                            <a class="dropdown-item lihat_btn" href="javascript:void(0)" data-lat="{{ $u->latitude }}"
+                                                data-long="{{ $u->longitude }}">
                                                 <i class="dw dw-edit2"></i> Lihat
                                             </a>
-											<a class="dropdown-item" href="#">
+											<a class="dropdown-item" href="{{ route('cabang_edit', $u->id) }}">
 												<i class="dw dw-edit2"></i> Edit
 											</a>
-											<a class="dropdown-item" href="{{ route('kategori_hapus', 0) }}" onclick="return confirm('Yakin ingin menghapus cabang ini?')">
+											<a class="dropdown-item" href="{{ route('cabang_hapus', $u->id) }}" onclick="return confirm('Yakin ingin menghapus cabang ini?')">
 												<i class="dw dw-delete-3"></i> Hapus
 											</a>
 										</div>
@@ -110,6 +124,7 @@
                     attribution: 'Map data &copy; <a href="https://google.com/maps/">Google Maps</a>'
                 }),
             };
+            var url = '{{ route("cabang_api") }}'
 
             var optionMarker = {
                 radius: 7,
@@ -135,16 +150,86 @@
             var radius = L.circle()
             overlayMaps.Cabang.eachLayer(function(layer){
                 layer.on('click', function(e){
-                    // console.log(e);
-                    map.flyTo(e.latlng, 19)
-                    radius.setLatLng(e.latlng)
-                    radius.setRadius(30).addTo(map)
-                    console.log(`Point: ${e.latlng.lat}, ${e.latlng.lng}`);
-                    // mark.setLatLng(e.latlng).addTo(map)
+                    add_info(e.latlng.lat, e.latlng.lng)
                 })
             })
 
             var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
+
+            $('.lihat_btn').click(function(event){
+                let lat = $(this).data('lat')
+                let long = $(this).data('long')
+
+                window.scrollTo(0, 0)
+                add_info(lat, long)
+            })
+
+            function add_info(lat, long){
+                map.flyTo([lat, long], 19)
+                radius.setLatLng([lat, long])
+                radius.setRadius(30).addTo(map)
+                //loading
+                $('.tempat_info').html('Loading...')
+
+                let data = get_info(lat, long)
+                //set
+                data.then(function(w){
+                    set_info(w)
+                })
+            }
+            async function get_info(lat, long){
+                try {
+                    let fetchURL = `${url}?lat=${lat}&long=${long}`
+                    const response = await fetch(fetchURL);
+                    if (!response.ok) {
+                        show_alert('danger', response.statusText)
+                        return
+                    }
+    
+                    const json = await response.json();
+                    return json;
+                } catch (error) {
+                    show_alert('danger', error.message)
+                    return
+                }
+            }
+            function set_info(data){
+                if(!data.status) return;
+                if(data.status == 500){
+                    show_alert('danger', data.message)
+                    return
+                }
+
+                let cabang = data.payload
+                if(!cabang){
+                    show_alert('warning', data.message)
+                    return
+                }
+
+                $('#nama').html(cabang.nama)
+                $('#kode').html(cabang.kode)
+                $('#alamat').html(cabang.alamat)
+                $('#fasilitas').html(cabang.fasilitas)
+                set_href(cabang.id)
+            }
+            function show_alert(warna, message){
+                //reset
+                $('.tempat_info').html('-')
+                $('.action_info').each(function(i, element){
+                    let button = $(element)
+                    button.attr('href', 'javascript:void(0)')
+                })
+
+                let html = `<div class="alert alert-${warna} alert-dismissable">${message}</div>`
+                $('#tempat_alert').html(html)
+            }
+            function set_href(id){
+                $('.action_info').each(function(i, element){
+                    let button = $(element)
+                    let act_url = button.data('url')+'/'+id
+                    button.attr('href', act_url)
+                })
+            }
         </script>
     </x-layout>
 </x-root>

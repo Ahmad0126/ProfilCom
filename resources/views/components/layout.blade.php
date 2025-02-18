@@ -58,6 +58,11 @@
                     </a>
                 </li>
                 <li>
+                    <a href="{{ route('cabang') }}" @class(["dropdown-toggle", "no-arrow", "active" => $pointer == 7])>
+                        <span class="micon dw dw-diagram"></span><span class="mtext">Cabang</span>
+                    </a>
+                </li>
+                <li>
                     <a href="{{ route('kategori') }}" @class(["dropdown-toggle", "no-arrow", "active" => $pointer == 3])>
                         <span class="micon dw dw-list3"></span><span class="mtext">Kategori</span>
                     </a>
