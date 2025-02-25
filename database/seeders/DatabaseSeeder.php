@@ -13,8 +13,9 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // \App\Models\User::factory(10)->create();
-        \App\Models\Berita::factory(100)->create();
+        // \App\Models\Berita::factory(100)->create();
 
+        /*
         \App\Models\Konfig::factory()->create([
             'logo' => fake()->imageUrl(),
             'favicon' => fake()->imageUrl(),
@@ -28,7 +29,9 @@ class DatabaseSeeder extends Seeder
             'alamat ' =>  fake()->address(),
             'profil' => fake()->paragraph(5),
             'breadcrumb' => fake()->imageUrl(),
-        ]);
+        ]); */
+
+        \App\Models\Cabang::factory(10)->create();
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

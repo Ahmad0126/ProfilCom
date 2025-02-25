@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Berita;
-use App\Models\Kategori;
+use App\Models\Cabang;
 use App\Models\Konfig;
+use App\Models\Sosmed;
+use App\Models\Kategori;
 use Illuminate\Http\Request;
 
 class Home extends Controller
@@ -20,6 +22,10 @@ class Home extends Controller
         $data['berita'] = Berita::get_latest_konten();
         $data['konfig'] = $this->konfig;
         return view('welcome', $data);
+    }
+    public function login(){
+        $data['title'] = 'Login  | '.$this->konfig->nama_website;
+        return view('login', $data);
     }
     public function berita(Request $req){
         $data['title'] = 'Berita | '.$this->konfig->nama_website;
@@ -63,5 +69,14 @@ class Home extends Controller
         $data['kategori_sidebar'] = Kategori::get_kategori_and_jumlah_kontennya(5);
         $data['kategori_active'] = $data['berita']->kategori;
         return view('detail_berita', $data);
+    }
+    public function cabang(){
+        $data['konfig'] = $this->konfig;
+        $data['kategori'] = Kategori::all();
+        $data['sosmed'] = Sosmed::all();
+        $data['search'] = null;
+        $data['cabang'] = Cabang::all();
+        $data['title'] = 'Peta Cabang | '.$this->konfig->nama_website;
+        return view('cabang', $data);
     }
 }

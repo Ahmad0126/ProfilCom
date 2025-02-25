@@ -220,6 +220,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route("profile") }}">Profil</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route("mapcabang") }}">Cabang</a>
+                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Berita</a>
                     <ul class="dropdown-menu ">
@@ -228,9 +231,6 @@
                             <li><a class="dropdown-item" href="{{ route('berita_kategori', $k->nama) }}">{{ $k->nama }}</a></li>
                         @endforeach
                     </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#contact">Kontak</a>
                 </li>
             </ul>
             <form class="d-flex gap-1 form-horizontal" action="{{ route('berita') }}" method="get" role="search">

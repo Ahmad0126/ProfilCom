@@ -1,4 +1,4 @@
-<x-root :title="'Login | nama_app'">
+<x-root :title="$title">
 	<x-front-layout>
 		<div class="d-flex align-items-center flex-wrap justify-content-center pb-5 patterned" style="margin-top: 6.5rem;">
 			<div class="container">

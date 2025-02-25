@@ -21,9 +21,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [Home::class, 'index'])->name('base');
-Route::get('/login', function () {
-    return view('login');
-})->name('login');
+Route::get('/login', [Home::class, 'login'])->name('login');
 Route::post('/login', [User::class, 'login'])->name('user_login');
 
 // profile route
@@ -32,6 +30,9 @@ Route::get('/profile', [Home::class, 'profile'])->name('profile');
 Route::get('/berita', [Home::class, 'berita'])->name('berita');
 Route::get('/berita/kategori/{nama?}', [Home::class, 'kategori'])->name('berita_kategori');
 Route::get('/berita/{slug?}', [Home::class, 'detail'])->name('berita_detail');
+//map
+Route::get('/cabang', [Home::class, 'cabang'])->name('mapcabang');
+Route::get('/mapcabang/api/info', [Cabang::class, 'info'])->name('cabang_api');
 
 Route::middleware('auth')->group(function () {
     //home route
@@ -77,7 +78,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/mapcabang/update', [Cabang::class, 'update'])->name('cabang_update');
     Route::get('/mapcabang/edit/{id}', [Cabang::class, 'edit'])->name('cabang_edit');
     Route::get('/mapcabang/hapus/{id}', [Cabang::class, 'hapus'])->name('cabang_hapus');
-    Route::get('/mapcabang/api/info', [Cabang::class, 'info'])->name('cabang_api');
 
     Route::post('/user/logout', [User::class, 'logout'])->name('user_logout');
 });
