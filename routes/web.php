@@ -54,6 +54,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/kategori/tambah', [Kategori::class, 'store'])->name('kategori_tambah');
     Route::post('/kategori/edit', [Kategori::class, 'edit'])->name('kategori_edit');
     Route::get('/kategori/hapus/{id}', [Kategori::class, 'hapus'])->name('kategori_hapus');
+    //other jenis
+    Route::post('/kategori/tambah/{relasi}', [Kategori::class, 'tambah_jenis'])->name('jenis_tambah');
+    Route::post('/kategori/edit/{relasi}', [Kategori::class, 'edit_jenis'])->name('jenis_edit');
+    Route::get('/kategori/hapus/{relasi}/{id}', [Kategori::class, 'hapus_jenis'])->name('jenis_hapus');
 
     Route::get('/konten', [Konten::class, 'index'])->name('konten');
     Route::get('/konten/tambah', [Konten::class, 'tambah'])->name('konten_tambah');

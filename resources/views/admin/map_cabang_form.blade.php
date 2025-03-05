@@ -3,7 +3,7 @@
     $cabang->longitude = old('longitude') ?? $cabang->longitude;
     $cabang->nama = old('nama') ?? $cabang->nama;
     $cabang->kode = old('kode') ?? $cabang->kode;
-    $cabang->fasilitas = old('fasilitas') ?? $cabang->fasilitas;
+    $cabang->id_jenis = old('id_jenis') ?? $cabang->id_jenis;
     $cabang->alamat = old('alamat') ?? $cabang->alamat;
 @endphp
 <x-root :title="$title">
@@ -40,7 +40,11 @@
                         </div>
                         <div class="mb-3">
                             <label for="">Fasilitas</label>
-                            <input type="text" name="fasilitas" id="" class="form-control" placeholder="Masukkan Fasilitas" value="{{ $cabang->fasilitas }}">
+                            <select name="id_jenis" id="" class="form-control">
+                                @foreach ($fasilitas as $c)
+                                    <option value="{{ $c->id }}" @selected($cabang->id_jenis == $c->id)>{{ $c->label }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="col-12 col-md-7">

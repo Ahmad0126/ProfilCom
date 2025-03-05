@@ -75,7 +75,7 @@ class Home extends Controller
         $data['kategori'] = Kategori::all();
         $data['sosmed'] = Sosmed::all();
         $data['search'] = null;
-        $data['cabang'] = Cabang::all();
+        $data['cabang'] = Cabang::get_cabang();
         $data['title'] = 'Peta Cabang | '.$this->konfig->nama_website;
         return view('cabang', $data);
     }

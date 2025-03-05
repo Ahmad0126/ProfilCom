@@ -42,8 +42,6 @@
                         </tbody>
                     </table>
                     <div id="tempat_alert"></div>
-                    <a href="javascript:void(0)" data-url="{{ route('cabang_edit', '') }}" class="action_info btn btn-primary">Edit</a>
-                    <a href="javascript:void(0)" data-url="{{ route('cabang_hapus', '') }}" class="action_info btn btn-danger" onclick="return confirm('Yakin ingin menghapus cabang ini?')">Hapus</a>
                 </div>
             </div>
         </div>
@@ -117,20 +115,18 @@
                 }),
             };
             var url = '{{ route("cabang_api") }}'
-
-            var optionMarker = {
-                radius: 7,
-                fillColor: '#F72C5B',
-                color: '#F72C5B',
-                weight: 1,
-                opacity: 1,
-                fillOpacity: 0.8
-            }
             
             var overlayMaps = {
                 "Cabang": L.layerGroup([
                     @foreach($cabang as $c)
-                        L.circleMarker([{{ $c->latitude }}, {{ $c->longitude }}], optionMarker),
+                        L.circleMarker([{{ $c->latitude }}, {{ $c->longitude }}], {
+                            radius: 7,
+                            fillColor: '{{ $c->warna ?? "#F72C5B" }}',
+                            color: '{{ $c->warna ?? "#F72C5B" }}',
+                            weight: 1,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        }),
                     @endforeach
                 ])
             };
@@ -142,6 +138,7 @@
             var radius = L.circle()
             overlayMaps.Cabang.eachLayer(function(layer){
                 layer.on('click', function(e){
+                    $('#tempat_alert').html('')
                     add_info(e.latlng.lat, e.latlng.lng)
                 })
             })
@@ -202,7 +199,6 @@
                 $('#kode').html(cabang.kode)
                 $('#alamat').html(cabang.alamat)
                 $('#fasilitas').html(cabang.fasilitas)
-                set_href(cabang.id)
             }
             function show_alert(warna, message){
                 //reset
@@ -214,13 +210,6 @@
 
                 let html = `<div class="alert alert-${warna} alert-dismissable">${message}</div>`
                 $('#tempat_alert').html(html)
-            }
-            function set_href(id){
-                $('.action_info').each(function(i, element){
-                    let button = $(element)
-                    let act_url = button.data('url')+'/'+id
-                    button.attr('href', act_url)
-                })
             }
         </script>
     </x-layout>

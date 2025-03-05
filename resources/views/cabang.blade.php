@@ -248,7 +248,6 @@
 		<div class="sidebar-title">
 			<h3 class="weight-600 font-16 text-blue">
 				Informasi Cabang
-				{{-- <span class="btn-block font-weight-400 font-12">User Interface Settings</span> --}}
 			</h3>
 			<div class="close-sidebar" data-toggle="right-sidebar-close">
 				<i class="icon-copy ion-close-round"></i>
@@ -310,20 +309,18 @@
             }),
         };
         var url = '{{ route("cabang_api") }}'
-
-        var optionMarker = {
-            radius: 7,
-            fillColor: '#F72C5B',
-            color: '#F72C5B',
-            weight: 1,
-            opacity: 1,
-            fillOpacity: 0.8
-        }
         
         var overlayMaps = {
             "Cabang": L.layerGroup([
                 @foreach($cabang as $c)
-                    L.circleMarker([{{ $c->latitude }}, {{ $c->longitude }}], optionMarker),
+                    L.circleMarker([{{ $c->latitude }}, {{ $c->longitude }}], {
+                        radius: 7,
+                        fillColor: '{{ $c->warna ?? "#F72C5B" }}',
+                        color: '{{ $c->warna ?? "#F72C5B" }}',
+                        weight: 1,
+                        opacity: 1,
+                        fillOpacity: 0.8
+                    }),
                 @endforeach
             ])
         };
@@ -335,6 +332,7 @@
         var radius = L.circle()
         overlayMaps.Cabang.eachLayer(function(layer){
             layer.on('click', function(e){
+                $('#tempat_alert').html('')
                 add_info(e.latlng.lat, e.latlng.lng)
                 $('#info_map').addClass('right-sidebar-visible')
             })

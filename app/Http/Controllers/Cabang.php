@@ -2,20 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cabang as CabangModel;
+use App\Models\Jenis;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Cabang as CabangModel;
 
 class Cabang extends Controller
 {
     public function index(){
         $data['title'] = 'Daftar Cabang';
-        $data['cabang'] = CabangModel::all();
+        $data['cabang'] = CabangModel::get_cabang();
         return view('admin.cabang_map', $data);
     }
     public function tambah(){
         $data['title'] = 'Tambah Cabang';
         $data['cabang'] = new CabangModel();
+        $data['fasilitas'] = Jenis::where('relasi', 'cabang')->get();
         return view('admin.map_cabang_form', $data);
     }
     public function edit($id){
@@ -26,6 +28,7 @@ class Cabang extends Controller
 
         $data['title'] = 'Edit Cabang';
         $data['cabang'] = $cabang;
+        $data['fasilitas'] = Jenis::where('relasi', 'cabang')->get();
         return view('admin.map_cabang_form', $data);
     }
     public function hapus($id){
@@ -49,14 +52,14 @@ class Cabang extends Controller
             'nama' => 'required|max:60|unique:cabang,nama',
             'alamat' => 'required',
             'kode' => 'nullable|unique:cabang,kode',
-            'fasilitas' => 'required',
+            'id_jenis' => 'required|exists:jenis,id',
         ]);
 
         try{
             $cabang = new CabangModel();
             $cabang->nama = $req->nama;
             $cabang->alamat = $req->alamat;
-            $cabang->fasilitas = $req->fasilitas;
+            $cabang->id_jenis = $req->id_jenis;
             $cabang->kode = $req->kode;
             $cabang->latitude = $req->latitude;
             $cabang->longitude = $req->longitude;
@@ -73,7 +76,7 @@ class Cabang extends Controller
             'longitude' => 'required|numeric',
             'nama' => 'required|max:60|unique:cabang,nama,'.$req->id.',id',
             'alamat' => 'required',
-            'fasilitas' => 'required',
+            'id_jenis' => 'required|exists:jenis,id',
             'kode' => 'nullable|unique:cabang,kode,'.$req->id.',id',
             'id' => 'required',
         ]);
@@ -82,7 +85,7 @@ class Cabang extends Controller
             $cabang = CabangModel::find($req->id);
             $cabang->nama = $req->nama;
             $cabang->alamat = $req->alamat;
-            $cabang->fasilitas = $req->fasilitas;
+            $cabang->id_jenis = $req->id_jenis;
             $cabang->kode = $req->kode ?? $cabang->kode;
             $cabang->latitude = $req->latitude;
             $cabang->longitude = $req->longitude;
