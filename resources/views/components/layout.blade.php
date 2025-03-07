@@ -58,18 +58,30 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('cabang') }}" @class(["dropdown-toggle", "no-arrow", "active" => $pointer == 7])>
-                        <span class="micon dw dw-diagram"></span><span class="mtext">Cabang</span>
+                    <a href="{{ route('konten') }}" @class(["dropdown-toggle", "no-arrow", "active" => $pointer == 4])>
+                        <span class="micon dw dw-newspaper-1"></span><span class="mtext">Berita</span>
                     </a>
+                </li>
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle" data-option="off">
+                        <span class="micon dw dw-apartment"></span><span class="mtext"> Peta </span>
+                    </a>
+                    <ul class="submenu">
+                        <li>
+                            <a href="{{ route('cabang') }}" @class(["active" => $pointer == 7])>
+                                Cabang
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('jalur') }}" @class(["active" => $pointer == 8])>
+                                Jalur
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li>
                     <a href="{{ route('kategori') }}" @class(["dropdown-toggle", "no-arrow", "active" => $pointer == 3])>
-                        <span class="micon dw dw-list3"></span><span class="mtext">Kategori</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('konten') }}" @class(["dropdown-toggle", "no-arrow", "active" => $pointer == 4])>
-                        <span class="micon dw dw-newspaper-1"></span><span class="mtext">Berita</span>
+                        <span class="micon dw dw-list3"></span><span class="mtext">Kategori & Jenis</span>
                     </a>
                 </li>
                 <li>

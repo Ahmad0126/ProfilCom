@@ -1,12 +1,13 @@
 <?php
 
-use App\Http\Controllers\Cabang;
 use App\Http\Controllers\Home;
 use App\Http\Controllers\User;
-use App\Http\Controllers\Kategori;
-use App\Http\Controllers\Sosmed;
-use App\Http\Controllers\Konfigurasi;
+use App\Http\Controllers\Jalur;
+use App\Http\Controllers\Cabang;
 use App\Http\Controllers\Konten;
+use App\Http\Controllers\Sosmed;
+use App\Http\Controllers\Kategori;
+use App\Http\Controllers\Konfigurasi;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,6 +34,7 @@ Route::get('/berita/{slug?}', [Home::class, 'detail'])->name('berita_detail');
 //map
 Route::get('/cabang', [Home::class, 'cabang'])->name('mapcabang');
 Route::get('/mapcabang/api/info', [Cabang::class, 'info'])->name('cabang_api');
+Route::get('/mapjalur/api/info', [Jalur::class, 'info'])->name('jalur_api');
 
 Route::middleware('auth')->group(function () {
     //home route
@@ -82,6 +84,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/mapcabang/update', [Cabang::class, 'update'])->name('cabang_update');
     Route::get('/mapcabang/edit/{id}', [Cabang::class, 'edit'])->name('cabang_edit');
     Route::get('/mapcabang/hapus/{id}', [Cabang::class, 'hapus'])->name('cabang_hapus');
+    
+    Route::get('/mapjalur', [Jalur::class, 'index'])->name('jalur');
+    Route::get('/mapjalur/tambah', [Jalur::class, 'tambah'])->name('jalur_tambah');
+    Route::post('/mapjalur/store', [Jalur::class, 'store'])->name('jalur_store');
+    Route::post('/mapjalur/update', [Jalur::class, 'update'])->name('jalur_update');
+    Route::get('/mapjalur/edit/{id}', [Jalur::class, 'edit'])->name('jalur_edit');
+    Route::get('/mapjalur/hapus/{id}', [Jalur::class, 'hapus'])->name('jalur_hapus');
 
     Route::post('/user/logout', [User::class, 'logout'])->name('user_logout');
 });
