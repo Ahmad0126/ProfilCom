@@ -64,7 +64,7 @@
                 </li>
                 <li class="dropdown">
                     <a href="javascript:;" class="dropdown-toggle" data-option="off">
-                        <span class="micon dw dw-apartment"></span><span class="mtext"> Peta </span>
+                        <span class="micon dw dw-map2"></span><span class="mtext"> Peta </span>
                     </a>
                     <ul class="submenu">
                         <li>
@@ -75,6 +75,11 @@
                         <li>
                             <a href="{{ route('jalur') }}" @class(["active" => $pointer == 8])>
                                 Jalur
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('lahan') }}" @class(["active" => $pointer == 9])>
+                                Lahan
                             </a>
                         </li>
                     </ul>

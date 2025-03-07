@@ -8,6 +8,7 @@ use App\Http\Controllers\Konten;
 use App\Http\Controllers\Sosmed;
 use App\Http\Controllers\Kategori;
 use App\Http\Controllers\Konfigurasi;
+use App\Http\Controllers\Lahan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,6 +36,7 @@ Route::get('/berita/{slug?}', [Home::class, 'detail'])->name('berita_detail');
 Route::get('/cabang', [Home::class, 'cabang'])->name('mapcabang');
 Route::get('/mapcabang/api/info', [Cabang::class, 'info'])->name('cabang_api');
 Route::get('/mapjalur/api/info', [Jalur::class, 'info'])->name('jalur_api');
+Route::get('/maplahan/api/info', [Lahan::class, 'info'])->name('lahan_api');
 
 Route::middleware('auth')->group(function () {
     //home route
@@ -91,6 +93,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/mapjalur/update', [Jalur::class, 'update'])->name('jalur_update');
     Route::get('/mapjalur/edit/{id}', [Jalur::class, 'edit'])->name('jalur_edit');
     Route::get('/mapjalur/hapus/{id}', [Jalur::class, 'hapus'])->name('jalur_hapus');
+
+    Route::get('/maplahan', [Lahan::class, 'index'])->name('lahan');
+    Route::get('/maplahan/tambah', [Lahan::class, 'tambah'])->name('lahan_tambah');
+    Route::post('/maplahan/store', [Lahan::class, 'store'])->name('lahan_store');
+    Route::post('/maplahan/update', [Lahan::class, 'update'])->name('lahan_update');
+    Route::get('/maplahan/edit/{id}', [Lahan::class, 'edit'])->name('lahan_edit');
+    Route::get('/maplahan/hapus/{id}', [Lahan::class, 'hapus'])->name('lahan_hapus');
 
     Route::post('/user/logout', [User::class, 'logout'])->name('user_logout');
 });
