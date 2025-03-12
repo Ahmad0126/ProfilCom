@@ -84,7 +84,7 @@
 										</a>
 										<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                                             <a class="dropdown-item lihat_btn" href="javascript:void(0)" data-id="{{ $u->id }}">
-                                                <i class="dw dw-edit2"></i> Lihat
+                                                <i class="icon-copy dw dw-eye"></i> Lihat
                                             </a>
 											<a class="dropdown-item" href="{{ route('jalur_edit', $u->id) }}">
 												<i class="dw dw-edit2"></i> Edit
@@ -131,10 +131,31 @@
 
             var radius = L.circle()
             overlayMaps.Jalur.eachLayer(function(layer){
-                layer.on('click', function(e){
-                    var id = e.target.options.id;
-                    $('#tempat_alert').html('')
-                    add_info(id)
+                layer.on({
+                    mouseover: (event) => {
+                    let layer = event.target;
+
+                    layer.setStyle({
+                        weight: 6,
+                        opacity: 0.8
+                    });
+
+                    layer.bringToFront();
+                    },
+                    mouseout: (event) => {
+                        let layer = event.target;
+                        layer.setStyle({
+                            weight: 3,
+                            opacity: 1
+                        });
+
+                        layer.bringToBack();
+                    },
+                    click: function(e){
+                        var id = e.target.options.id;
+                        $('#tempat_alert').html('')
+                        add_info(id)
+                    }
                 })
             })
 

@@ -98,6 +98,10 @@ class Lahan extends Controller
             if($lahan == null){
                 $message = 'Informasi tidak ditemukan';
             }
+            
+            $lahan->created_at = date('d M Y', strtotime($lahan->created_at));
+            $lahan->updated_at = date('d M Y', strtotime($lahan->updated_at));
+
             $payload = $lahan;
         }catch(\Throwable $e){
             $status = 500;

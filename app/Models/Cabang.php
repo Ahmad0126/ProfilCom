@@ -16,10 +16,9 @@ class Cabang extends Model
         return $this->belongsTo(Jenis::class, 'id_jenis');
     }
 
-    public static function get_info_by_coordinates($lat, $long){
+    public static function get_info_by_id($id){
         $data = DB::table('cabang')->select(['nama', 'alamat', 'kode', 'latitude', 'longitude', DB::raw('jenis.label as fasilitas')])
-            ->where(DB::raw('ROUND(latitude, GREATEST(14 - LENGTH(FLOOR(ABS(latitude))), 0))'), $lat)
-            ->where(DB::raw('ROUND(longitude, GREATEST(14 - LENGTH(FLOOR(ABS(longitude))), 0))'), $long)
+            ->where('cabang.id', $id)
             ->join('jenis', 'jenis.id', '=', 'cabang.id_jenis', 'left')
             ->get()->first();
 

@@ -12,6 +12,7 @@ class Cabang extends Controller
     public function index(){
         $data['title'] = 'Daftar Cabang';
         $data['cabang'] = CabangModel::get_cabang();
+        $data['cabangdata'] = CabangModel::paginate(25);
         return view('admin.cabang_map', $data);
     }
     public function tambah(){
@@ -102,7 +103,7 @@ class Cabang extends Controller
         $payload = null;
 
         try{
-            $cabang = CabangModel::get_info_by_coordinates($req->lat, $req->long);
+            $cabang = CabangModel::get_info_by_id($req->id);
             if($cabang == null){
                 $message = 'Informasi tidak ditemukan';
             }

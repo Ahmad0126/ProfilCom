@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Jalur;
+use App\Models\Lahan;
 use App\Models\Berita;
 use App\Models\Cabang;
 use App\Models\Konfig;
@@ -76,7 +78,9 @@ class Home extends Controller
         $data['sosmed'] = Sosmed::all();
         $data['search'] = null;
         $data['cabang'] = Cabang::get_cabang();
-        $data['title'] = 'Peta Cabang | '.$this->konfig->nama_website;
+        $data['jalur'] = Jalur::get_jalur();
+        $data['lahan'] = Lahan::get_lahan();
+        $data['title'] = 'Peta Distribusi | '.$this->konfig->nama_website;
         return view('cabang', $data);
     }
 }

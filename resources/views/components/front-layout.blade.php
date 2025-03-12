@@ -221,7 +221,7 @@
                     <a class="nav-link" href="{{ route("profile") }}">Profil</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route("mapcabang") }}">Cabang</a>
+                    <a class="nav-link" href="{{ route("mapcabang") }}">Peta</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Berita</a>

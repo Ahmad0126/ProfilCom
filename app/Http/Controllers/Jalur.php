@@ -98,6 +98,10 @@ class Jalur extends Controller
             if($jalur == null){
                 $message = 'Informasi tidak ditemukan';
             }
+            
+            $jalur->created_at = date('d M Y', strtotime($jalur->created_at));
+            $jalur->updated_at = date('d M Y', strtotime($jalur->updated_at));
+        
             $payload = $jalur;
         }catch(\Throwable $e){
             $status = 500;

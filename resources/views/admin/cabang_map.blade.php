@@ -68,22 +68,21 @@
 					</thead>
 					<tbody>
 						@php $no = 1; @endphp
-						@foreach ($cabang as $u)
+						@foreach ($cabangdata as $u)
 							<tr>
 								<td>{{ $no++ }}</td>
 								<td>{{ $u->nama }}</td>
 								<td>{{ $u->kode }}</td>
 								<td>{{ $u->alamat }}</td>
-								<td>{{ $u->fasilitas }}</td>
+								<td>{{ $u->fasilitas->label }}</td>
 								<td>
 									<div class="dropdown">
 										<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
 											<i class="dw dw-more"></i>
 										</a>
 										<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                            <a class="dropdown-item lihat_btn" href="javascript:void(0)" data-lat="{{ $u->latitude }}"
-                                                data-long="{{ $u->longitude }}">
-                                                <i class="dw dw-edit2"></i> Lihat
+                                            <a class="dropdown-item lihat_btn" href="javascript:void(0)" data-id="{{ $u->id }}">
+                                                <i class="icon-copy dw dw-eye"></i> Lihat
                                             </a>
 											<a class="dropdown-item" href="{{ route('cabang_edit', $u->id) }}">
 												<i class="dw dw-edit2"></i> Edit
@@ -125,7 +124,8 @@
                             color: '{{ $c->warna ?? "#F72C5B" }}',
                             weight: 1,
                             opacity: 1,
-                            fillOpacity: 0.8
+                            fillOpacity: 0.8,
+                            id: {{ $c->id }}
                         }),
                     @endforeach
                 ])
@@ -138,37 +138,44 @@
             var radius = L.circle()
             overlayMaps.Cabang.eachLayer(function(layer){
                 layer.on('click', function(e){
+                    map.flyTo(e.latlng, 19)
+                    radius.setLatLng(e.latlng)
+                    radius.setRadius(30).addTo(map)
+
+                    var id = e.target.options.id;
                     $('#tempat_alert').html('')
-                    add_info(e.latlng.lat, e.latlng.lng)
+                    add_info(id)
                 })
             })
 
             var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
 
             $('.lihat_btn').click(function(event){
-                let lat = $(this).data('lat')
-                let long = $(this).data('long')
+                let id = $(this).data('id')
 
                 window.scrollTo(0, 0)
-                add_info(lat, long)
+                add_info(id, true)
             })
 
-            function add_info(lat, long){
-                map.flyTo([lat, long], 19)
-                radius.setLatLng([lat, long])
-                radius.setRadius(30).addTo(map)
+            function add_info(id, mark = false){
                 //loading
                 $('.tempat_info').html('Loading...')
 
-                let data = get_info(lat, long)
+                let data = get_info(id)
                 //set
                 data.then(function(w){
+                    if (mark) {
+                        var koor = [w.payload.latitude, w.payload.longitude]
+                        map.flyTo(koor, 19)
+                        radius.setLatLng(koor)
+                        radius.setRadius(30).addTo(map)
+                    }
                     set_info(w)
                 })
             }
-            async function get_info(lat, long){
+            async function get_info(id){
                 try {
-                    let fetchURL = `${url}?lat=${lat}&long=${long}`
+                    let fetchURL = `${url}?id=${id}`
                     const response = await fetch(fetchURL);
                     if (!response.ok) {
                         show_alert('danger', response.statusText)
@@ -183,7 +190,7 @@
                 }
             }
             function set_info(data){
-                if(!data.status) return;
+                if(!data) return;
                 if(data.status == 500){
                     show_alert('danger', data.message)
                     return

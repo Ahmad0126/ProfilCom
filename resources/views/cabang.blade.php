@@ -224,7 +224,7 @@
                         <a class="nav-link" href="{{ route("profile") }}">Profil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route("mapcabang") }}">Cabang</a>
+                        <a class="nav-link" href="{{ route("mapcabang") }}">Peta</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Berita</a>
@@ -247,7 +247,7 @@
     <div class="right-sidebar" style="z-index: 1030" id="info_map">
 		<div class="sidebar-title">
 			<h3 class="weight-600 font-16 text-blue">
-				Informasi Cabang
+				Informasi
 			</h3>
 			<div class="close-sidebar" data-toggle="right-sidebar-close">
 				<i class="icon-copy ion-close-round"></i>
@@ -258,6 +258,10 @@
 				<table class="table table-striped">
                     <tbody>
                         <tr>
+                            <td>Kategori</td>
+                            <td id="kategori">-</td>
+                        </tr>
+                        <tr>
                             <td>Nama</td>
                             <td class="tempat_info" id="nama">-</td>
                         </tr>
@@ -265,13 +269,25 @@
                             <td>Kode</td>
                             <td class="tempat_info" id="kode">-</td>
                         </tr>
-                        <tr>
+                        <tr class="cabang">
                             <td>Fasilitas</td>
                             <td class="tempat_info" id="fasilitas">-</td>
                         </tr>
-                        <tr>
+                        <tr class="cabang">
                             <td>Alamat</td>
                             <td class="tempat_info" id="alamat">-</td>
+                        </tr>
+                        <tr class="bidang">
+                            <td>Jenis</td>
+                            <td class="tempat_info" id="jenis">-</td>
+                        </tr>
+                        <tr class="bidang">
+                            <td>Ditambahkan Pada</td>
+                            <td class="tempat_info" id="created">-</td>
+                        </tr>
+                        <tr class="bidang">
+                            <td>Terakhir Diubah</td>
+                            <td class="tempat_info" id="updated">-</td>
                         </tr>
                     </tbody>
                 </table>
@@ -308,7 +324,8 @@
                 attribution: 'Map data &copy; <a href="https://google.com/maps/">Google Maps</a>'
             }),
         };
-        var url = '{{ route("cabang_api") }}'
+        const base_url = '{{ route("base") }}';
+        var url = base_url;
         
         var overlayMaps = {
             "Cabang": L.layerGroup([
@@ -319,51 +336,126 @@
                         color: '{{ $c->warna ?? "#F72C5B" }}',
                         weight: 1,
                         opacity: 1,
-                        fillOpacity: 0.8
+                        fillOpacity: 0.8,
+                        id: {{ $c->id }}
                     }),
+                @endforeach
+            ]),
+            "Jalur": L.layerGroup([
+                @foreach($jalur as $c)
+                    L.polyline({!! $c->posisi !!}, {color: '{{ $c->warna ?? "blue" }}', id: {{ $c->id }}}),
+                @endforeach
+            ]),
+            "Lahan": L.layerGroup([
+                @foreach($lahan as $c)
+                    L.polygon({!! $c->posisi !!}, {color: '{{ $c->warna ?? "blue" }}', id: {{ $c->id }}}),
                 @endforeach
             ])
         };
 
-        var map = L.map('map').setView([-7.597343575775382, 110.94985662865446], 13)
-        baseMaps.Satelit.addTo(map)
-        overlayMaps.Cabang.addTo(map)
+        var map = L.map('map').setView([-7.597343575775382, 110.94985662865446], 13);
+        baseMaps.Satelit.addTo(map);
+        overlayMaps.Cabang.addTo(map);
 
         var radius = L.circle()
         overlayMaps.Cabang.eachLayer(function(layer){
             layer.on('click', function(e){
-                $('#tempat_alert').html('')
-                add_info(e.latlng.lat, e.latlng.lng)
-                $('#info_map').addClass('right-sidebar-visible')
+                url = `${base_url}/mapcabang`
+                $('.cabang').show()
+                $('.bidang').hide()
+                $('#kategori').html('Cabang')
+                handleClick(e, true)
+            })
+        })
+        overlayMaps.Lahan.eachLayer(function(layer){
+            layer.on({
+                mouseover: (event) => {
+                    let layer = event.target;
+
+                    layer.setStyle({
+                        weight: 6,
+                        opacity: 0.8
+                    });
+
+                    layer.bringToFront();
+                },
+                mouseout: (event) => {
+                    let layer = event.target;
+                    layer.setStyle({
+                        weight: 3,
+                        opacity: 1
+                    });
+
+                    layer.bringToBack();
+                },
+                click: (e) => {
+                    $('#kategori').html('Lahan')
+                    $('.cabang').hide()
+                    $('.bidang').show()
+                    url = `${base_url}/maplahan`
+                    handleClick(e)
+                }
+            })
+        })
+        overlayMaps.Jalur.eachLayer(function(layer){
+            layer.on({
+                mouseover: (event) => {
+                    let layer = event.target;
+
+                    layer.setStyle({
+                        weight: 6,
+                        opacity: 0.8
+                    });
+
+                    layer.bringToFront();
+                },
+                mouseout: (event) => {
+                    let layer = event.target;
+                    layer.setStyle({
+                        weight: 3,
+                        opacity: 1
+                    });
+
+                    layer.bringToBack();
+                },
+                click: (e) => {
+                    $('#kategori').html('Jalur')
+                    $('.cabang').hide()
+                    $('.bidang').show()
+                    url = `${base_url}/mapjalur`
+                    handleClick(e)
+                }
             })
         })
 
         var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
 
-        $('.lihat_btn').click(function(event){
-            let lat = $(this).data('lat')
-            let long = $(this).data('long')
-
-            window.scrollTo(0, 0)
-            add_info(lat, long)
-        })
-
-        function add_info(lat, long){
-            map.flyTo([lat, long], 17)
-            radius.setLatLng([lat, long])
-            radius.setRadius(30).addTo(map)
+        function handleClick(e, setRadius = false){
+            radius.remove()
+            map.flyTo(e.latlng, 17)
+            if(setRadius){
+                radius.setLatLng(e.latlng)
+                radius.setRadius(30).addTo(map)
+            }
+            
+            var id = e.target.options.id;
+            $('#tempat_alert').html('')
+            add_info(id)
+            $('#info_map').addClass('right-sidebar-visible')
+        }
+        function add_info(id){
             //loading
             $('.tempat_info').html('Loading...')
 
-            let data = get_info(lat, long)
+            let data = get_info(id)
             //set
             data.then(function(w){
                 set_info(w)
             })
         }
-        async function get_info(lat, long){
+        async function get_info(id){
             try {
-                let fetchURL = `${url}?lat=${lat}&long=${long}`
+                let fetchURL = `${url}/api/info?id=${id}`
                 const response = await fetch(fetchURL);
                 if (!response.ok) {
                     show_alert('danger', response.statusText)
@@ -378,7 +470,7 @@
             }
         }
         function set_info(data){
-            if(!data.status) return;
+            if(!data) return;
             if(data.status == 500){
                 show_alert('danger', data.message)
                 return
@@ -394,6 +486,9 @@
             $('#kode').html(cabang.kode)
             $('#alamat').html(cabang.alamat)
             $('#fasilitas').html(cabang.fasilitas)
+            $('#jenis').html(cabang.jenis)
+            $('#created').html(cabang.created_at)
+            $('#updated').html(cabang.updated_at)
         }
         function show_alert(warna, message){
             //reset

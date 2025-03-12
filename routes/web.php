@@ -33,7 +33,7 @@ Route::get('/berita', [Home::class, 'berita'])->name('berita');
 Route::get('/berita/kategori/{nama?}', [Home::class, 'kategori'])->name('berita_kategori');
 Route::get('/berita/{slug?}', [Home::class, 'detail'])->name('berita_detail');
 //map
-Route::get('/cabang', [Home::class, 'cabang'])->name('mapcabang');
+Route::get('/peta', [Home::class, 'cabang'])->name('mapcabang');
 Route::get('/mapcabang/api/info', [Cabang::class, 'info'])->name('cabang_api');
 Route::get('/mapjalur/api/info', [Jalur::class, 'info'])->name('jalur_api');
 Route::get('/maplahan/api/info', [Lahan::class, 'info'])->name('lahan_api');
