@@ -11,12 +11,15 @@ class Jalur extends Model
     use HasFactory;
     protected $table = 'jalur';
 
-    public static function get_jalur(){
-        $data = DB::table('jalur')->select(['jalur.id', 'nama', 'kode', 'posisi', DB::raw('jenis.label as jenis'), 'warna'])
-            ->join('jenis', 'jenis.id', '=', 'jalur.id_jenis', 'left')
-            ->get();
+    public static function get_jalur($api = false){
+        $data = DB::table('jalur')->select(['jalur.id', 'nama', 'kode', 'posisi', DB::raw('jenis.label as jenis'), 'warna','jalur.created_at', 'jalur.updated_at'])
+            ->join('jenis', 'jenis.id', '=', 'jalur.id_jenis', 'left');
 
-        return $data;
+        if($api){
+            return $data->get();
+        }else{
+            return $data->paginate(25);
+        }
     }
     public static function get_info_by_id($id){
         $data = DB::table('jalur')->select(['jalur.id', 'nama', 'kode', 'posisi', DB::raw('jenis.label as jenis'), 'warna', 'jalur.created_at', 'jalur.updated_at'])

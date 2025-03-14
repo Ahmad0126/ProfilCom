@@ -12,7 +12,6 @@ class Cabang extends Controller
     public function index(){
         $data['title'] = 'Daftar Cabang';
         $data['cabang'] = CabangModel::get_cabang();
-        $data['cabangdata'] = CabangModel::paginate(25);
         return view('admin.cabang_map', $data);
     }
     public function tambah(){
@@ -98,26 +97,6 @@ class Cabang extends Controller
         }
     }
     public function info(Request $req){
-        $status = 200;
-        $message = 'OK';
-        $payload = null;
-
-        try{
-            $cabang = CabangModel::get_info_by_id($req->id);
-            if($cabang == null){
-                $message = 'Informasi tidak ditemukan';
-            }
-            $payload = $cabang;
-        }catch(\Throwable $e){
-            $status = 500;
-            $message = $e->getMessage();
-        }
-        
-        $data = [
-            'status' => $status,
-            'message' => $message,
-            'payload' => $payload
-        ];
-        return response()->json($data, $status);
+        return response()->json(CabangModel::get_cabang(true));
     }
 }

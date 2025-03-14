@@ -24,11 +24,14 @@ class Cabang extends Model
 
         return $data;
     }
-    public static function get_cabang(){
+    public static function get_cabang($api = false){
         $data = DB::table('cabang')->select(['cabang.id', 'nama', 'alamat', 'kode', 'latitude', 'longitude', DB::raw('jenis.label as fasilitas'), 'warna'])
-            ->join('jenis', 'jenis.id', '=', 'cabang.id_jenis', 'left')
-            ->get();
+            ->join('jenis', 'jenis.id', '=', 'cabang.id_jenis', 'left');
 
-        return $data;
+        if($api){
+            return $data->get();
+        }else{
+            return $data->paginate(25);
+        }
     }
 }

@@ -325,22 +325,17 @@
             }),
         };
         const base_url = '{{ route("base") }}';
-        var url = base_url;
+        const url_lahan = '{{ route("lahan_api") }}'
+        const url_jalur = '{{ route("jalur_api") }}'
+        const url_cabang = '{{ route("cabang_api") }}'
+
+        var state = '';
+        var data_cabang = []
+        var data_jalur = []
+        var data_lahan = []
         
         var overlayMaps = {
-            "Cabang": L.layerGroup([
-                @foreach($cabang as $c)
-                    L.circleMarker([{{ $c->latitude }}, {{ $c->longitude }}], {
-                        radius: 7,
-                        fillColor: '{{ $c->warna ?? "#F72C5B" }}',
-                        color: '{{ $c->warna ?? "#F72C5B" }}',
-                        weight: 1,
-                        opacity: 1,
-                        fillOpacity: 0.8,
-                        id: {{ $c->id }}
-                    }),
-                @endforeach
-            ]),
+            "Cabang": L.layerGroup([]),
             "Jalur": L.layerGroup([
                 @foreach($jalur as $c)
                     L.polyline({!! $c->posisi !!}, {color: '{{ $c->warna ?? "blue" }}', id: {{ $c->id }}}),
@@ -358,78 +353,130 @@
         overlayMaps.Cabang.addTo(map);
 
         var radius = L.circle()
-        overlayMaps.Cabang.eachLayer(function(layer){
-            layer.on('click', function(e){
-                url = `${base_url}/mapcabang`
-                $('.cabang').show()
-                $('.bidang').hide()
-                $('#kategori').html('Cabang')
-                handleClick(e, true)
-            })
-        })
-        overlayMaps.Lahan.eachLayer(function(layer){
-            layer.on({
-                mouseover: (event) => {
-                    let layer = event.target;
 
-                    layer.setStyle({
-                        weight: 6,
-                        opacity: 0.8
-                    });
+        $(document).ready(function(){
+            $('.tempat_info').html('Loading...')
 
-                    layer.bringToFront();
-                },
-                mouseout: (event) => {
-                    let layer = event.target;
-                    layer.setStyle({
-                        weight: 3,
-                        opacity: 1
-                    });
+            //get all data
+            let request = get_data()
+            request.then(function(status){
+                if(request){
+                    //set data cabang
+                    data_cabang.forEach(function(data){
+                        var cabang = L.circleMarker([data.latitude, data.longitude], {
+                            radius: 7,
+                            fillColor: data.warna,
+                            color: data.warna,
+                            weight: 1,
+                            opacity: 1,
+                            fillOpacity: 0.8,
+                            id: data.id
+                        })
+                        cabang.on('click', function(e){
+                            state = 'cabang'
+                            $('.cabang').show()
+                            $('.bidang').hide()
+                            $('#kategori').html('Cabang')
+                            handleClick(e, true)
+                        })
+                        overlayMaps.Cabang.addLayer(cabang)
+                    })
 
-                    layer.bringToBack();
-                },
-                click: (e) => {
-                    $('#kategori').html('Lahan')
-                    $('.cabang').hide()
-                    $('.bidang').show()
-                    url = `${base_url}/maplahan`
-                    handleClick(e)
+                    //set data jalur
+                    data_jalur.forEach(function(data){
+                        var jalur = L.polyline(JSON.parse(data.posisi), {color: data.warna, id: data.id})
+                        jalur.on({
+                            mouseover: (event) => {
+                                let layer = event.target;
+
+                                layer.setStyle({
+                                    weight: 6,
+                                    opacity: 0.8
+                                });
+                            },
+                            mouseout: (event) => {
+                                let layer = event.target;
+                                layer.setStyle({
+                                    weight: 3,
+                                    opacity: 1
+                                });
+                            },
+                            click: (e) => {
+                                state = 'jalur'
+                                $('#kategori').html('Jalur')
+                                $('.cabang').hide()
+                                $('.bidang').show()
+                                handleClick(e)
+                            }
+                        })
+                        overlayMaps.Jalur.addLayer(jalur)
+                    })
+                    
+                    //set data lahan
+                    data_lahan.forEach(function(data){
+                        var lahan = L.polygon(JSON.parse(data.posisi), {color: data.warna, id: data.id})
+                        lahan.on({
+                            mouseover: (event) => {
+                                let layer = event.target;
+
+                                layer.setStyle({
+                                    weight: 6,
+                                    opacity: 0.8
+                                });
+                            },
+                            mouseout: (event) => {
+                                let layer = event.target;
+                                layer.setStyle({
+                                    weight: 3,
+                                    opacity: 1
+                                });
+                            },
+                            click: (e) => {
+                                state = 'lahan'
+                                $('#kategori').html('Lahan')
+                                $('.cabang').hide()
+                                $('.bidang').show()
+                                handleClick(e)
+                            }
+                        })
+                        overlayMaps.Lahan.addLayer(lahan)
+                    })
                 }
+                var layerControl = L.control.layers(baseMaps, overlayMaps, {position: 'topleft'}).addTo(map);
             })
-        })
-        overlayMaps.Jalur.eachLayer(function(layer){
-            layer.on({
-                mouseover: (event) => {
-                    let layer = event.target;
 
-                    layer.setStyle({
-                        weight: 6,
-                        opacity: 0.8
-                    });
-
-                    layer.bringToFront();
-                },
-                mouseout: (event) => {
-                    let layer = event.target;
-                    layer.setStyle({
-                        weight: 3,
-                        opacity: 1
-                    });
-
-                    layer.bringToBack();
-                },
-                click: (e) => {
-                    $('#kategori').html('Jalur')
-                    $('.cabang').hide()
-                    $('.bidang').show()
-                    url = `${base_url}/mapjalur`
-                    handleClick(e)
-                }
-            })
+            // get_cabang.fail(function(err){
+            //     show_alert('danger', 'Error loading data cabang')
+            // })
         })
 
-        var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
+        async function get_data(){
+            //get data cabang
+            let get_cabang = await fetch(url_cabang);
+            if (!get_cabang.ok) {
+                show_alert('danger', get_cabang.statusText)
+                return false
+            }
+            data_cabang = await get_cabang.json();
 
+            //get data jalur
+            let get_jalur = await fetch(url_jalur);
+            if (!get_jalur.ok) {
+                show_alert('danger', get_jalur.statusText)
+                return false
+            }
+            data_jalur = await get_jalur.json();
+
+            //get data lahan
+            let get_lahan = await fetch(url_lahan);
+            if (!get_lahan.ok) {
+                show_alert('danger', get_lahan.statusText)
+                return false
+            }
+            data_lahan = await get_lahan.json();
+
+            return true
+        }
         function handleClick(e, setRadius = false){
             radius.remove()
             map.flyTo(e.latlng, 17)
@@ -444,51 +491,28 @@
             $('#info_map').addClass('right-sidebar-visible')
         }
         function add_info(id){
-            //loading
-            $('.tempat_info').html('Loading...')
-
-            let data = get_info(id)
-            //set
-            data.then(function(w){
-                set_info(w)
-            })
-        }
-        async function get_info(id){
-            try {
-                let fetchURL = `${url}/api/info?id=${id}`
-                const response = await fetch(fetchURL);
-                if (!response.ok) {
-                    show_alert('danger', response.statusText)
-                    return
-                }
-
-                const json = await response.json();
-                return json;
-            } catch (error) {
-                show_alert('danger', error.message)
-                return
+            let data = {}
+            switch (state) {
+                case 'cabang':
+                    data = data_cabang.find(c => c.id === id)
+                    break;
+                case 'lahan':
+                    data = data_lahan.find(c => c.id === id)
+                    break;
+                case 'jalur':
+                    data = data_jalur.find(c => c.id === id)
+                    break;
             }
+            set_info(data);
         }
         function set_info(data){
-            if(!data) return;
-            if(data.status == 500){
-                show_alert('danger', data.message)
-                return
-            }
-
-            let cabang = data.payload
-            if(!cabang){
-                show_alert('warning', data.message)
-                return
-            }
-
-            $('#nama').html(cabang.nama)
-            $('#kode').html(cabang.kode)
-            $('#alamat').html(cabang.alamat)
-            $('#fasilitas').html(cabang.fasilitas)
-            $('#jenis').html(cabang.jenis)
-            $('#created').html(cabang.created_at)
-            $('#updated').html(cabang.updated_at)
+            $('#nama').html(data.nama)
+            $('#kode').html(data.kode)
+            $('#alamat').html(data.alamat)
+            $('#fasilitas').html(data.fasilitas)
+            $('#jenis').html(data.jenis)
+            $('#created').html(data.created_at)
+            $('#updated').html(data.updated_at)
         }
         function show_alert(warna, message){
             //reset
@@ -497,6 +521,7 @@
                 let button = $(element)
                 button.attr('href', 'javascript:void(0)')
             })
+            $('#info_map').addClass('right-sidebar-visible')
 
             let html = `<div class="alert alert-${warna} alert-dismissable">${message}</div>`
             $('#tempat_alert').html(html)

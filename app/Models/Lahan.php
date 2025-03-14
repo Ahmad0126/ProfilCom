@@ -11,12 +11,15 @@ class Lahan extends Model
     use HasFactory;
     protected $table = 'lahan';
 
-    public static function get_lahan(){
-        $data = DB::table('lahan')->select(['lahan.id', 'nama', 'kode', 'posisi', DB::raw('jenis.label as jenis'), 'warna'])
-            ->join('jenis', 'jenis.id', '=', 'lahan.id_jenis', 'left')
-            ->get();
+    public static function get_lahan($api = false){
+        $data = DB::table('lahan')->select(['lahan.id', 'nama', 'kode', 'posisi', DB::raw('jenis.label as jenis'), 'warna', 'lahan.created_at', 'lahan.updated_at'])
+            ->join('jenis', 'jenis.id', '=', 'lahan.id_jenis', 'left');
 
-        return $data;
+        if($api){
+            return $data->get();
+        }else{
+            return $data->paginate(25);
+        }
     }
     public static function get_info_by_id($id){
         $data = DB::table('lahan')->select(['lahan.id', 'nama', 'kode', 'posisi', DB::raw('jenis.label as jenis'), 'warna', 'lahan.created_at', 'lahan.updated_at'])

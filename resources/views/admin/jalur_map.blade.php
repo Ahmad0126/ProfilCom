@@ -70,7 +70,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						@php $no = 1; @endphp
+						@php $no = $jalur->firstItem(); @endphp
 						@foreach ($jalur as $u)
 							<tr>
 								<td>{{ $no++ }}</td>
@@ -100,9 +100,14 @@
 					</tbody>
 				</table>
 			</div>
+            <div class="blog-pagination" style="overflow-x: scroll">
+                {{ $jalur->onEachSide(1)->links('pagination.custom') }}
+            </div>
         </div>
 
         <script>
+            const url = '{{ route("jalur_api") }}'
+            
             var baseMaps = {
                 "Satelit": L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
                     maxZoom: 20,
@@ -115,51 +120,63 @@
                     attribution: 'Map data &copy; <a href="https://google.com/maps/">Google Maps</a>'
                 }),
             };
-            var url = '{{ route("jalur_api") }}'
-
             var overlayMaps = {
-                "Jalur": L.layerGroup([
-                    @foreach($jalur as $c)
-                        L.polyline({!! $c->posisi !!}, {color: '{{ $c->warna ?? "blue" }}', id: {{ $c->id }}}),
-                    @endforeach
-                ])
+                "Jalur": L.layerGroup([])
             };
 
             var map = L.map('map').setView([-7.597343575775382, 110.94985662865446], 13)
             baseMaps.Satelit.addTo(map)
             overlayMaps.Jalur.addTo(map)
 
-            var radius = L.circle()
-            overlayMaps.Jalur.eachLayer(function(layer){
-                layer.on({
-                    mouseover: (event) => {
-                    let layer = event.target;
+            var data_jalur = [];
 
-                    layer.setStyle({
-                        weight: 6,
-                        opacity: 0.8
-                    });
+            $(document).ready(function(){
+                $('.tempat_info').html('Loading...')
+                //get data jalur
+                let data = $.ajax(url)
+                data.done(function(w){
+                    data_jalur = w;
+                    w.forEach(function(jalur){
+                        // console.log(JSON.parse(jalur.posisi));
+                        var layer = L.polyline(JSON.parse(jalur.posisi), {color: jalur.warna, id: jalur.id})
 
-                    layer.bringToFront();
-                    },
-                    mouseout: (event) => {
-                        let layer = event.target;
-                        layer.setStyle({
-                            weight: 3,
-                            opacity: 1
+                        layer.on({
+                            mouseover: (event) => {
+                            let layer = event.target;
+
+                            layer.setStyle({
+                                weight: 6,
+                                opacity: 0.8
+                            });
+
+                            layer.bringToFront();
+                            },
+                            mouseout: (event) => {
+                                let layer = event.target;
+                                layer.setStyle({
+                                    weight: 3,
+                                    opacity: 1
+                                });
+
+                                layer.bringToBack();
+                            },
+                            click: function(e){
+                                var id = e.target.options.id;
+                                add_info(id)
+                            }
                         });
 
-                        layer.bringToBack();
-                    },
-                    click: function(e){
-                        var id = e.target.options.id;
-                        $('#tempat_alert').html('')
-                        add_info(id)
-                    }
+                        overlayMaps.Jalur.addLayer(layer)
+                    })
+
+                    var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
+                    $('.tempat_info').html('-')
+                });
+
+                data.fail(function(err){
+                    show_alert('danger', 'Error loading data jalur')
                 })
             })
-
-            var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
 
             $('.lihat_btn').click(function(event){
                 let id = $(this).data('id')
@@ -169,51 +186,19 @@
             })
 
             function add_info(id){
-                //loading
-                $('.tempat_info').html('Loading...')
-
-                let data = get_info(id)
-                //set
-                data.then(function(w){
-                    set_info(w)
-                })
-            }
-            async function get_info(id){
-                try {
-                    let fetchURL = `${url}?id=${id}`
-                    const response = await fetch(fetchURL);
-                    if (!response.ok) {
-                        show_alert('danger', response.statusText)
-                        return
-                    }
-    
-                    const json = await response.json();
-                    return json;
-                } catch (error) {
-                    show_alert('danger', error.message)
-                    return
-                }
+                let jalur = data_jalur.find(c => c.id === id)
+                set_info(jalur);
             }
             function set_info(data){
-                if(!data.status) return;
-                if(data.status == 500){
-                    show_alert('danger', data.message)
-                    return
-                }
+                $('#tempat_alert').html('')
 
-                let jalur = data.payload
-                if(!jalur){
-                    show_alert('warning', data.message)
-                    return
-                }
+                $('#nama').html(data.nama)
+                $('#kode').html(data.kode)
+                $('#jenis').html(data.jenis)
+                $('#created').html(data.created_at)
+                $('#updated').html(data.updated_at)
 
-                $('#nama').html(jalur.nama)
-                $('#kode').html(jalur.kode)
-                $('#jenis').html(jalur.jenis)
-                $('#created').html(jalur.created_at)
-                $('#updated').html(jalur.updated_at)
-
-                let pos = JSON.parse(jalur.posisi)
+                let pos = JSON.parse(data.posisi)
                 map.fitBounds(L.latLngBounds(pos))
             }
             function show_alert(warna, message){

@@ -89,30 +89,13 @@ class Lahan extends Controller
         }
     }
     public function info(Request $req){
-        $status = 200;
-        $message = 'OK';
-        $payload = null;
+        $res = LahanModel::get_lahan(true);
+        foreach ($res as $key => $value) {
+            $value->created_at = date('d M Y', strtotime($value->created_at));
+            $value->updated_at = date('d M Y', strtotime($value->updated_at));
 
-        try{
-            $lahan = LahanModel::get_info_by_id($req->id);
-            if($lahan == null){
-                $message = 'Informasi tidak ditemukan';
-            }
-            
-            $lahan->created_at = date('d M Y', strtotime($lahan->created_at));
-            $lahan->updated_at = date('d M Y', strtotime($lahan->updated_at));
-
-            $payload = $lahan;
-        }catch(\Throwable $e){
-            $status = 500;
-            $message = $e->getMessage();
+            $res[$key] = $value;
         }
-        
-        $data = [
-            'status' => $status,
-            'message' => $message,
-            'payload' => $payload
-        ];
-        return response()->json($data, $status);
+        return response()->json($res);
     }
 }

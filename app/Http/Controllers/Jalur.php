@@ -89,30 +89,13 @@ class Jalur extends Controller
         }
     }
     public function info(Request $req){
-        $status = 200;
-        $message = 'OK';
-        $payload = null;
+        $res = JalurModel::get_jalur(true);
+        foreach ($res as $key => $value) {
+            $value->created_at = date('d M Y', strtotime($value->created_at));
+            $value->updated_at = date('d M Y', strtotime($value->updated_at));
 
-        try{
-            $jalur = JalurModel::get_info_by_id($req->id);
-            if($jalur == null){
-                $message = 'Informasi tidak ditemukan';
-            }
-            
-            $jalur->created_at = date('d M Y', strtotime($jalur->created_at));
-            $jalur->updated_at = date('d M Y', strtotime($jalur->updated_at));
-        
-            $payload = $jalur;
-        }catch(\Throwable $e){
-            $status = 500;
-            $message = $e->getMessage();
+            $res[$key] = $value;
         }
-        
-        $data = [
-            'status' => $status,
-            'message' => $message,
-            'payload' => $payload
-        ];
-        return response()->json($data, $status);
+        return response()->json($res);
     }
 }
