@@ -103,98 +103,18 @@
             </div>
         </div>
 
+        <script src="{{ asset('scripts/maps.js') }}"></script>
         <script>
             const url = '{{ route("cabang_api") }}'
-            
-            var baseMaps = {
-                "Satelit": L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
-                    maxZoom: 20,
-                    subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-                    attribution: 'Map data &copy; <a href="https://google.com/maps/">Google Maps</a>'
-                }),
-                "Terrain": L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
-                    maxZoom: 20,
-                    subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-                    attribution: 'Map data &copy; <a href="https://google.com/maps/">Google Maps</a>'
-                }),
-            };
-            var overlayMaps = {
-                "Cabang": L.layerGroup([])
-            };
-
-            var map = L.map('map').setView([-7.597343575775382, 110.94985662865446], 13)
-            baseMaps.Satelit.addTo(map)
-            overlayMaps.Cabang.addTo(map)
-
-            var radius = L.circle()
-            var data_cabang = [];
-
-            $(document).ready(function(){
-                $('.tempat_info').html('Loading...')
-                //get data cabang
-                let data = $.ajax(url)
-                data.done(function(w){
-                    data_cabang = w;
-                    w.forEach(function(cabang){
-                        var layer = L.circleMarker([cabang.latitude, cabang.longitude], {
-                            radius: 7,
-                            fillColor: cabang.warna,
-                            color: cabang.warna,
-                            weight: 1,
-                            opacity: 1,
-                            fillOpacity: 0.8,
-                            id: cabang.id
-                        });
-
-                        layer.on('click', function(e){
-                            var id = e.target.options.id;
-                            add_info(id)
-                        });
-
-                        overlayMaps.Cabang.addLayer(layer)
-                    })
-
-                    var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
-                    $('.tempat_info').html('-')
-                });
-
-                data.fail(function(err){
-                    show_alert('danger', 'Error loading data cabang')
-                })
-            })
-
             $('.lihat_btn').click(function(event){
                 let id = $(this).data('id')
                 window.scrollTo(0, 0)
-                add_info(id, true)
+                state = 'cabang'
+                add_info(id, 'point')
             })
-
-            function add_info(id, mark = false){
-                let cabang = data_cabang.find(c => c.id === id)
-                set_info(cabang);
-            }
-            function set_info(data){
-                $('#tempat_alert').html('')
-                map.flyTo([data.latitude, data.longitude], 19)
-                radius.setLatLng([data.latitude, data.longitude])
-                radius.setRadius(30).addTo(map)
-
-                $('#nama').html(data.nama)
-                $('#kode').html(data.kode)
-                $('#alamat').html(data.alamat)
-                $('#fasilitas').html(data.fasilitas)
-            }
-            function show_alert(warna, message){
-                //reset
-                $('.tempat_info').html('-')
-                $('.action_info').each(function(i, element){
-                    let button = $(element)
-                    button.attr('href', 'javascript:void(0)')
-                })
-
-                let html = `<div class="alert alert-${warna} alert-dismissable">${message}</div>`
-                $('#tempat_alert').html(html)
-            }
+            $(document).ready(function(){
+                load_data('cabang', url)
+            })
         </script>
     </x-layout>
 </x-root>

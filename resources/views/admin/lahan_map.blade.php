@@ -105,113 +105,18 @@
             </div>
         </div>
 
+        <script src="{{ asset('scripts/maps.js') }}"></script>
         <script>
             const url = '{{ route("lahan_api") }}'
-            
-            var baseMaps = {
-                "Satelit": L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
-                    maxZoom: 20,
-                    subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-                    attribution: 'Map data &copy; <a href="https://google.com/maps/">Google Maps</a>'
-                }),
-                "Terrain": L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
-                    maxZoom: 20,
-                    subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-                    attribution: 'Map data &copy; <a href="https://google.com/maps/">Google Maps</a>'
-                }),
-            };
-            var overlayMaps = {
-                "Lahan": L.layerGroup([])
-            };
-
-            var map = L.map('map').setView([-7.597343575775382, 110.94985662865446], 13)
-            baseMaps.Satelit.addTo(map)
-            overlayMaps.Lahan.addTo(map)
-
-            var data_lahan = [];
-
-            $(document).ready(function(){
-                $('.tempat_info').html('Loading...')
-                //get data lahan
-                let data = $.ajax(url)
-                data.done(function(w){
-                    data_lahan = w;
-                    w.forEach(function(lahan){
-                        // console.log(JSON.parse(lahan.posisi));
-                        var layer = L.polygon(JSON.parse(lahan.posisi), {color: lahan.warna, id: lahan.id})
-
-                        layer.on({
-                            mouseover: (event) => {
-                            let layer = event.target;
-
-                            layer.setStyle({
-                                weight: 6,
-                                opacity: 0.8
-                            });
-
-                            layer.bringToFront();
-                            },
-                            mouseout: (event) => {
-                                let layer = event.target;
-                                layer.setStyle({
-                                    weight: 3,
-                                    opacity: 1
-                                });
-
-                                layer.bringToBack();
-                            },
-                            click: function(e){
-                                var id = e.target.options.id;
-                                add_info(id)
-                            }
-                        });
-
-                        overlayMaps.Lahan.addLayer(layer)
-                    })
-
-                    var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
-                    $('.tempat_info').html('-')
-                });
-
-                data.fail(function(err){
-                    show_alert('danger', 'Error loading data lahan')
-                })
-            })
-
             $('.lihat_btn').click(function(event){
                 let id = $(this).data('id')
-
                 window.scrollTo(0, 0)
-                add_info(id)
+                state = 'lahan'
+                add_info(id, 'bounds')
             })
-
-            function add_info(id){
-                let lahan = data_lahan.find(c => c.id === id)
-                set_info(lahan);
-            }
-            function set_info(data){
-                $('#tempat_alert').html('')
-
-                $('#nama').html(data.nama)
-                $('#kode').html(data.kode)
-                $('#jenis').html(data.jenis)
-                $('#created').html(data.created_at)
-                $('#updated').html(data.updated_at)
-
-                let pos = JSON.parse(data.posisi)
-                map.fitBounds(L.latLngBounds(pos))
-            }
-            function show_alert(warna, message){
-                //reset
-                $('.tempat_info').html('-')
-                $('.action_info').each(function(i, element){
-                    let button = $(element)
-                    button.attr('href', 'javascript:void(0)')
-                })
-
-                let html = `<div class="alert alert-${warna} alert-dismissable">${message}</div>`
-                $('#tempat_alert').html(html)
-            }
+            $(document).ready(function(){
+                load_data('lahan', url)
+            })
         </script>
     </x-layout>
 </x-root>
